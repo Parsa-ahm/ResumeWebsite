@@ -1,0 +1,53 @@
+.btn1 {
+  margin: 25px;
+  display: inline-block;
+  height: 200px;
+  width: 200px;
+  border-radius: 20%;
+}
+
+.game-over {
+  background-color: rgba(255, 0, 0, 0.356);
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.pressed {
+  background-color: rgb(255, 255, 255);
+}
+#header {
+  background-image: url(../bogglesolver/assets/header.svg);
+  background-size: cover;
+  overflow: visible;
+  background-position: center;
+  height: 700px; /* Add 'px' for proper height */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+#header .container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+#header h1,
+#header h3 {
+  color: white; /* Ensure text is visible over the background */
+}

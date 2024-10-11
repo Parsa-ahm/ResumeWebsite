@@ -1,0 +1,123 @@
+table {
+  border-collapse: collapse;
+  margin: auto;
+}
+td {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 24px;
+  position: relative;
+}
+input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border: none;
+  font-size: 24px;
+}
+hr {
+  color: inherit;
+  border: 1;
+  opacity: 1;
+}
+
+#header {
+  background-image: url(../bogglesolver/assets/header.svg);
+  background-size: cover;
+  overflow: visible;
+  background-position: center;
+  height: 700px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+#header .container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+#header h1,
+#header h3 {
+  color: white;
+}
+.nav {
+  background-color: #1d2125a9;
+}
+.navbar-brand {
+  padding-left: 0%;
+}
+.navbar-nav {
+  padding-right: 0%;
+}
+.sudoku-grid {
+  margin: 0 auto;
+  width: 450px; /* Adjust as needed */
+}
+
+.sudoku-grid table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #1d2125a9;
+  border: 4px solid #ffffff;
+}
+
+.sudoku-grid td {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #ffffff;
+  padding: 0;
+}
+.sudoku-grid td:nth-child(0) {
+  border-left: 4px solid #ffffff;
+}
+.sudoku-grid td:nth-child(3n) {
+  border-right: 4px solid #ffffff;
+}
+
+.sudoku-grid tr:nth-child(3n) td {
+  border-bottom: 4px solid #ffffff;
+}
+
+.sudoku-grid td:first-child {
+  border-left: 2px solid #777575;
+}
+
+.sudoku-grid tr:first-child td {
+  border-top: 2px solid #777575;
+}
+
+.sudoku-grid input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 24px;
+  border: none;
+  background-color: #1d2125a9;
+  color: white;
+}
+
+.sudoku-grid input:focus {
+  outline: none;
+}
+.sudoku-input {
+  appearance: none;
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  background-color: black;
+  border: none;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  color: white;
+}
+
+.sudoku-input::-webkit-outer-spin-button,
+.sudoku-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
