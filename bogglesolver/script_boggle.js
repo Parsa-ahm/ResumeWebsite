@@ -1,13 +1,16 @@
 let wasmModule = null;
-let wasmSolver = null;
+let solverInstance = null;
 
 // Load the WebAssembly module
 async function loadWasm() {
   try {
-    // Correctly referencing the path to WASM for GitHub Pages
     wasmModule = await import('./pkg/bogglesolver.js');
-    wasmSolver = wasmModule.BoggleSolver;
     console.log('WASM module loaded successfully.');
+
+    // Initialize the solver instance after WASM loads
+    const dictionary = await import('./word_list_scrabble_2019.txt'); // Replace with your actual word list
+    const board = ["abcd", "efgh", "ijkl", "mnop"]; // Placeholder, will be replaced by user input
+    solverInstance = new wasmModule.BoggleSolver(board, dictionary);
   } catch (error) {
     console.error('Failed to load WASM module:', error);
   }
@@ -15,7 +18,7 @@ async function loadWasm() {
 
 // Call the WASM function to solve the Boggle board
 async function solveBoggle() {
-  if (!wasmSolver) {
+  if (!solverInstance) {
     console.error('WASM solver is not initialized');
     return;
   }
@@ -31,7 +34,8 @@ async function solveBoggle() {
   }
 
   try {
-    const result = wasmSolver.solve(board);  // Calling the WASM function directly
+    solverInstance = new wasmModule.BoggleSolver(board, ["some", "dictionary", "words"]); // Replace with actual dictionary
+    const result = solverInstance.solve();  // Calling the WASM function directly
     displayResults(result);
   } catch (error) {
     console.error('Error while solving the board:', error);
@@ -62,45 +66,16 @@ function displayResults(result) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
 
-  const sortedInitials = Object.keys(result).sort();
-
-  sortedInitials.forEach((initial) => {
-    const words = result[initial];
-    words.sort((a, b) => {
-      if (a[0] < b[0]) return -1;
-      if (a[0] > b[0]) return 1;
-      return b[1] - a[1];
-    });
-
-    const letterDiv = document.createElement("div");
-    const hr = document.createElement("hr");
-    hr.classList.add("hr");
-    letterDiv.innerHTML = `<h3>${initial.toUpperCase()}</h3>`;
-    letterDiv.classList.add("m-4");
-    let wordList = document.createElement("ul");
-    wordList.classList.add("list-group-horizontal", "list-group");
-
-    words.forEach(([word, points, path], index) => {
-      if (index > 0 && index % 8 === 0) {
-        letterDiv.appendChild(wordList);
-        wordList = document.createElement("ul");
-        wordList.classList.add("list-group-horizontal", "list-group");
-      }
-
-      const wordItem = document.createElement("li");
-      wordItem.innerHTML = `<span style="cursor:pointer;" onclick="highlightPath('${word}', ${JSON.stringify(
-        path
-      )})">${word} (${points} points)</span>`;
-      wordItem.classList.add("list-group-item", "p-2");
-      wordList.appendChild(wordItem);
-    });
-
-    letterDiv.appendChild(wordList);
-    resultsDiv.appendChild(letterDiv);
+  const words = result.split(", ");
+  words.forEach((word) => {
+    const wordItem = document.createElement("div");
+    wordItem.innerText = word;
+    resultsDiv.appendChild(wordItem);
   });
 }
 
-// Function to highlight the solution path in the grid
+// Function to highlight the solution path in the grid (if needed)
+// Assuming this function highlights the path for a found word
 function highlightPath(word, path) {
   const table = document.getElementById("boggle-board");
   const resultsDiv = document.getElementById("results");
@@ -109,14 +84,6 @@ function highlightPath(word, path) {
   const highlightedCells = table.querySelectorAll(".bg-success");
   highlightedCells.forEach((cell) => cell.classList.remove("bg-success"));
 
-  const highlightedWords = resultsDiv.querySelectorAll(
-    ".list-group-item-success"
-  );
-  highlightedWords.forEach((item) =>
-    item.classList.remove("list-group-item-success")
-  );
-
-  // Highlight the new path
   path.forEach(([y, x]) => {
     table.rows[y].cells[x].classList.add("bg-success");
   });
