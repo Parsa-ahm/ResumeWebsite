@@ -1,0 +1,15 @@
+{
+  "name": "bogglesolver",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "bogglesolver_bg.wasm",
+    "bogglesolver.js",
+    "bogglesolver.d.ts"
+  ],
+  "main": "bogglesolver.js",
+  "types": "bogglesolver.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
