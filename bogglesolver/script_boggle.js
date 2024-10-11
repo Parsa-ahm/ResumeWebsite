@@ -5,7 +5,7 @@ let solverInstance = null;
 async function loadWasm() {
   try {
     wasmModule = await import('./pkg/bogglesolver.js');
-    console.log('WASM module loaded successfully.');
+    console.log('WASM module loaded successfully. now');
 
     // Initialize the solver instance after WASM loads
     const dictionary = await import('./word_list_scrabble_2019.txt'); // Replace with your actual word list
