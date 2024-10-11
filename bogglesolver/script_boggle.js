@@ -5,7 +5,7 @@ let wasmSolver = null;
 async function loadWasm() {
   try {
     // Correctly referencing the path to WASM for GitHub Pages
-    wasmModule = await import('./bogglesolver.js');
+    wasmModule = await import('./pkg/bogglesolver.js');
     wasmSolver = wasmModule.BoggleSolver;
     console.log('WASM module loaded successfully.');
   } catch (error) {
