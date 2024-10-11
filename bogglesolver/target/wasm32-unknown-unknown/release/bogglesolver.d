@@ -1,0 +1,1 @@
+/Users/parsaahmadizadeh/Documents/Work/Resume/Website/ResumeWebsite/bogglesolver/target/wasm32-unknown-unknown/release/bogglesolver.wasm: /Users/parsaahmadizadeh/Documents/Work/Resume/Website/ResumeWebsite/bogglesolver/src/lib.rs
