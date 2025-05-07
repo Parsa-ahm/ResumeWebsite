@@ -1,6 +1,0 @@
-The algorithm is made in rust (src/main.rs) this creates a web service on port 127.0.0.1:8080 that accepts POST requests. 
-Main.rs uses word_list_scrabble_2019.txt as its source for words to search for
-
-Run:
-    cargo run
-                in the \bogglesolver directory
