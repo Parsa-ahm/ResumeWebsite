@@ -2,6 +2,19 @@
  * Interactive Event Handlers and User Interactions
  */
 
+// Expose PLAYBACK_SPEED globally so animations.js can access it
+window.PLAYBACK_SPEED = 1.0;
+
+// Update playback speed from UI control
+function updatePlaybackSpeed(speed) {
+    window.PLAYBACK_SPEED = parseFloat(speed);
+    if (typeof STEP_DELAY !== 'undefined') {
+        // Update in console.js scope
+        window.PLAYBACK_SPEED = parseFloat(speed);
+    }
+    document.getElementById('speed-display').textContent = speed + 'x';
+}
+
 // Tab switching
 document.addEventListener('DOMContentLoaded', function() {
     const tabs = document.querySelectorAll('.algorithm-tab');
@@ -112,8 +125,43 @@ function addDecisionTreePoint() {
     renderDecisionTree();
 
     // Animate and log
+    clearConsole();
     logDecisionTreeProcess(point);
     animateDecisionTreePath(point);
+    
+    // NEW: Add this as a "Custom" row to the loan table
+    const tbody = document.getElementById('dt-dataset-body');
+    if (tbody) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${age}</td>
+            <td>$${income.toLocaleString()}</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span style="color: #ff6b6b;">Custom</span></td>
+        `;
+        tr.style.cursor = 'pointer';
+        tr.style.transition = 'background-color 0.2s';
+        
+        tr.addEventListener('mouseenter', () => {
+            tr.style.backgroundColor = 'rgba(255, 107, 107, 0.1)';
+        });
+        tr.addEventListener('mouseleave', () => {
+            tr.style.backgroundColor = '';
+        });
+        
+        tr.addEventListener('click', () => {
+            clearConsole();
+            logDecisionTreeProcess(point);
+            animateDecisionTreePath(point);
+            document.getElementById('decision-tree-svg')?.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        });
+        
+        tbody.appendChild(tr);
+    }
 }
 
 // Add data point to Linear Regression
@@ -139,8 +187,43 @@ function addLinearRegressionPoint() {
     // Re-render visualization
     renderLinearRegression();
 
-    // Show result
-    alert(`Data Point Added!\nPoint: (${x}, ${y})\nPredicted Y: ${prediction.toFixed(2)}\nError: ${error.toFixed(2)}`);
+    // Animate and log
+    clearConsole();
+    logLinearRegressionProcess(point);
+    animateLinearRegressionPoint(point);
+    
+    // NEW: Add this as a "Custom" row to the house price table
+    const tbody = document.getElementById('lr-dataset-body');
+    if (tbody) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${x}</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span style="color: #ff6b6b;">$${y.toLocaleString()}</span> (Predicted: $${prediction.toFixed(0).toLocaleString()})</td>
+        `;
+        tr.style.cursor = 'pointer';
+        tr.style.transition = 'background-color 0.2s';
+        
+        tr.addEventListener('mouseenter', () => {
+            tr.style.backgroundColor = 'rgba(255, 107, 107, 0.1)';
+        });
+        tr.addEventListener('mouseleave', () => {
+            tr.style.backgroundColor = '';
+        });
+        
+        tr.addEventListener('click', () => {
+            clearConsole();
+            logLinearRegressionProcess(point);
+            animateLinearRegressionPoint(point);
+            document.getElementById('linear-regression-chart')?.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        });
+        
+        tbody.appendChild(tr);
+    }
 }
 
 // Add data point to Logistic Regression
@@ -166,8 +249,57 @@ function addLogisticRegressionPoint() {
     // Re-render visualization
     renderLogisticRegression();
 
-    // Show result
-    alert(`Data Point Added!\nPoint: (${x.toFixed(2)}, ${y})\nProbability: ${probability.toFixed(3)}\nPrediction: Class ${prediction}`);
+    // Animate and log
+    clearConsole();
+    logToConsole('=== Logistic Regression: Probability Analysis ===', 'info');
+    logToConsole(`[Step 1] Custom point: (${x.toFixed(2)}, ${y})`, 'info');
+            setTimeout(() => {
+                logToConsole('[Step 2] Applying sigmoid (logistic) function...', 'info');
+                setTimeout(() => {
+                    logToConsole(`[Step 3] Probability: ${probability.toFixed(3)}`, 'success');
+                    logToConsole(`[Step 4] Prediction: Class ${prediction} (${prediction ? 'Spam' : 'Not Spam'})`, 'success');
+                }, getDelay());
+            }, getDelay());
+    
+    // NEW: Add this as a "Custom" row to the email spam table
+    const tbody = document.getElementById('logr-dataset-body');
+    if (tbody) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>-</td>
+            <td>-</td>
+            <td>${(x * 100).toFixed(0)}%</td>
+            <td><span style="color: #ff6b6b;">${y === 1 ? 'Spam (Custom)' : 'Not Spam (Custom)'}</span> - Predicted: ${prediction === 1 ? 'Spam' : 'Not Spam'}</td>
+        `;
+        tr.style.cursor = 'pointer';
+        tr.style.transition = 'background-color 0.2s';
+        
+        tr.addEventListener('mouseenter', () => {
+            tr.style.backgroundColor = 'rgba(255, 107, 107, 0.1)';
+        });
+        tr.addEventListener('mouseleave', () => {
+            tr.style.backgroundColor = '';
+        });
+        
+        tr.addEventListener('click', () => {
+            clearConsole();
+            logToConsole('=== Logistic Regression: Probability Analysis ===', 'info');
+            logToConsole(`[Step 1] Using feature: x = ${x.toFixed(2)}`, 'info');
+                setTimeout(() => {
+                    logToConsole('[Step 2] Applying sigmoid (logistic) function...', 'info');
+                setTimeout(() => {
+                    logToConsole(`[Step 3] Probability of spam: ${probability.toFixed(3)}`, 'success');
+                    logToConsole(`[Step 4] Predicted class: ${prediction} (${prediction ? 'Spam' : 'Not Spam'})`, 'success');
+                }, getDelay());
+            }, getDelay());
+            document.getElementById('logistic-regression-chart')?.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        });
+        
+        tbody.appendChild(tr);
+    }
 }
 
 // Propagate through Neural Network
@@ -262,6 +394,33 @@ function populateLoanDataset() {
             <td>$${row.loanAmount.toLocaleString()}</td>
             <td>${row.approved}</td>
         `;
+        tr.style.cursor = 'pointer';
+        tr.style.transition = 'background-color 0.2s';
+        
+        // Make rows hoverable
+        tr.addEventListener('mouseenter', () => {
+            tr.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        });
+        tr.addEventListener('mouseleave', () => {
+            tr.style.backgroundColor = '';
+        });
+        
+        // Clicking a row runs it through the decision tree
+        tr.addEventListener('click', () => {
+            const point = { age: row.age, income: row.income };
+            
+            // Console explanation + animation
+            clearConsole();
+            logDecisionTreeProcess(point);
+            animateDecisionTreePath(point);
+            
+            // Scroll the tree into view
+            document.getElementById('decision-tree-svg')?.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        });
+        
         tbody.appendChild(tr);
     });
 }
@@ -305,6 +464,33 @@ function populateHousePriceDataset() {
             <td>${row.age}</td>
             <td>$${row.price.toLocaleString()}</td>
         `;
+        tr.style.cursor = 'pointer';
+        tr.style.transition = 'background-color 0.2s';
+        
+        // Make rows hoverable
+        tr.addEventListener('mouseenter', () => {
+            tr.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        });
+        tr.addEventListener('mouseleave', () => {
+            tr.style.backgroundColor = '';
+        });
+        
+        // Clicking a row shows prediction
+        tr.addEventListener('click', () => {
+            // Use size as the X feature for the simple 1D regression demo
+            const point = { x: row.size, y: row.price };
+            
+            // Reuse existing step-by-step + animation
+            clearConsole();
+            logLinearRegressionProcess(point);
+            animateLinearRegressionPoint(point);
+            
+            document.getElementById('linear-regression-chart')?.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        });
+        
         tbody.appendChild(tr);
     });
 }
@@ -323,6 +509,46 @@ function populateEmailSpamDataset() {
             <td>${row.uppercasePercent}%</td>
             <td>${row.spam}</td>
         `;
+        tr.style.cursor = 'pointer';
+        tr.style.transition = 'background-color 0.2s';
+        
+        // Make rows hoverable
+        tr.addEventListener('mouseenter', () => {
+            tr.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        });
+        tr.addEventListener('mouseleave', () => {
+            tr.style.backgroundColor = '';
+        });
+        
+        // Clicking a row shows spam probability
+        tr.addEventListener('click', () => {
+            // Map to 1D logistic regression feature space (using uppercase %)
+            const x = row.uppercasePercent / 100; // Normalize to [0,1]
+            const point = { x, y: row.spam === 'Yes' ? 1 : 0 };
+            
+            clearConsole();
+            logToConsole('=== Logistic Regression: Probability Analysis ===', 'info');
+            logToConsole(`[Step 1] Using uppercase % as feature: x = ${x.toFixed(2)}`, 'info');
+            
+            setTimeout(() => {
+                const probability = logisticRegressionModel.getProbability(x);
+                const prediction = probability > 0.5 ? 1 : 0;
+                
+                logToConsole('[Step 2] Applying sigmoid (logistic) function...', 'info');
+                setTimeout(() => {
+                    logToConsole(`[Step 3] Probability of spam: ${probability.toFixed(3)}`, 'success');
+                    logToConsole(`[Step 4] Predicted class: ${prediction} (${prediction ? 'Spam' : 'Not Spam'})`, 'success');
+                    logToConsole(`[Step 5] Actual label: ${row.spam} - ${prediction === point.y ? '✓ Correct!' : '✗ Incorrect'}`, 
+                        prediction === point.y ? 'success' : 'warning');
+                }, getDelay());
+            }, getDelay());
+            
+            document.getElementById('logistic-regression-chart')?.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        });
+        
         tbody.appendChild(tr);
     });
 }

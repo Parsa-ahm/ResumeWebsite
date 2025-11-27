@@ -2,6 +2,16 @@
  * Console Window for Step-by-Step Processing
  */
 
+// Centralized timing control for slow-motion simulation
+let STEP_DELAY = 600; // Base delay in milliseconds
+let PLAYBACK_SPEED = window.PLAYBACK_SPEED || 1.0; // 1.0 = normal, 0.5 = half speed, 2.0 = double speed
+
+// Helper to get adjusted delay based on playback speed
+function getDelay(baseDelay = STEP_DELAY) {
+    const speed = window.PLAYBACK_SPEED || PLAYBACK_SPEED || 1.0;
+    return baseDelay / speed;
+}
+
 let consoleOpen = false;
 
 function toggleConsole() {
@@ -44,30 +54,30 @@ function logDecisionTreeProcess(point) {
     logToConsole(`Processing point: Age=${point.age}, Income=${point.income}`, 'info');
     
     logStep(1, 'Loading dataset...', 'info');
-    setTimeout(() => {
-        logStep(2, 'Pre-processing: Checking for missing values...', 'info');
-        setTimeout(() => {
-            logStep(3, 'Pre-processing: All values present, no imputation needed', 'success');
-            setTimeout(() => {
-                logStep(4, 'Starting tree traversal...', 'info');
-                setTimeout(() => {
-                    logStep(5, `Evaluating root node: Income <= 45000?`, 'info');
                     setTimeout(() => {
-                        const condition = point.income <= 45000 ? 'Yes' : 'No';
-                        logStep(6, `Condition result: ${condition}`, 'success');
+                        logStep(2, 'Pre-processing: Checking for missing values...', 'info');
                         setTimeout(() => {
-                            logStep(7, 'Moving to child node...', 'info');
+                            logStep(3, 'Pre-processing: All values present, no imputation needed', 'success');
                             setTimeout(() => {
-                                const prediction = decisionTreeModel.predict(point);
-                                logStep(8, `Reached leaf node. Prediction: ${prediction}`, 'success');
-                                logToConsole('=== Processing Complete ===', 'success');
-                            }, 500);
-                        }, 500);
-                    }, 500);
-                }, 500);
-            }, 500);
-        }, 500);
-    }, 500);
+                                logStep(4, 'Starting tree traversal...', 'info');
+                                setTimeout(() => {
+                                    logStep(5, `Evaluating root node: Income <= 45000?`, 'info');
+                                    setTimeout(() => {
+                                        const condition = point.income <= 45000 ? 'Yes' : 'No';
+                                        logStep(6, `Condition result: ${condition}`, 'success');
+                                        setTimeout(() => {
+                                            logStep(7, 'Moving to child node...', 'info');
+                                            setTimeout(() => {
+                                                const prediction = decisionTreeModel.predict(point);
+                                                logStep(8, `Reached leaf node. Prediction: ${prediction}`, 'success');
+                                                logToConsole('=== Processing Complete ===', 'success');
+                                            }, getDelay());
+                                        }, getDelay());
+                                    }, getDelay());
+                                }, getDelay());
+                            }, getDelay());
+                        }, getDelay());
+                    }, getDelay());
 }
 
 // Linear Regression Console Output
@@ -93,13 +103,13 @@ function logLinearRegressionProcess(point) {
                             setTimeout(() => {
                                 logStep(8, `Prediction: y = ${prediction.toFixed(2)}`, 'success');
                                 logToConsole('=== Processing Complete ===', 'success');
-                            }, 500);
-                        }, 500);
-                    }, 500);
-                }, 500);
-            }, 500);
-        }, 500);
-    }, 500);
+                            }, getDelay());
+                        }, getDelay());
+                    }, getDelay());
+                }, getDelay());
+            }, getDelay());
+        }, getDelay());
+    }, getDelay());
 }
 
 // Random Forest Console Output
@@ -266,4 +276,5 @@ function logNLPProcess(sentence) {
         }, 500);
     }, 500);
 }
+
 

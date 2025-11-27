@@ -37,3 +37,5 @@ with open('dictionary.js', 'w', encoding='utf-8') as f:
 print(f"Created dictionary.js with {len(words)} words")
 print("The dictionary is now available as DICTIONARY_WORDS in JavaScript")
 
+
+

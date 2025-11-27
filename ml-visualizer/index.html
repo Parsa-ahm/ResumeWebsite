@@ -289,6 +289,21 @@
             transform: scale(1.1);
         }
 
+        /* Playback Speed Control */
+        .playback-speed-control {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #2d3135;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 998;
+        }
+
         /* Real Dataset Tables */
         .dataset-table-container {
             max-height: 180px;
@@ -380,6 +395,28 @@
             background-color: #1d2125;
             color: white;
         }
+
+        /* Code block styling */
+        pre {
+            background-color: #0d1117;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 0.5rem 0;
+        }
+
+        code {
+            color: #c9d1d9;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        pre code {
+            display: block;
+            white-space: pre;
+        }
     </style>
 </head>
 
@@ -432,6 +469,62 @@
                             based on feature values, creating a hierarchical structure of decisions.</p>
                         
                         <div class="accordion accordion-flush" id="dt-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dt-intuition">
+                                        Intuition / Real-Life Story
+                                    </button>
+                                </h2>
+                                <div id="dt-intuition" class="accordion-collapse collapse" data-bs-parent="#dt-accordion">
+                                    <div class="accordion-body">
+                                        <p>
+                                            Imagine a loan officer with a checklist. First they ask:
+                                            <strong>"Is this person earning at least $45k?"</strong> If not, they're
+                                            already nervous. If yes, they go to the next question:
+                                            <strong>"Are they younger than 30?"</strong> and so on.
+                                        </p>
+                                        <p>
+                                            Each question in the checklist is a <em>node</em> in the tree. A "Yes"
+                                            or "No" moves you down a branch. When you hit the end of the checklist,
+                                            you're at a <em>leaf</em> — e.g. "Approved" or "Denied". Click the
+                                            samples in the dataset table above or add your own Age + Income and literally watch that checklist
+                                            being followed in the tree visualization above.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dt-code">
+                                        Python Training Code
+                                    </button>
+                                </h2>
+                                <div id="dt-code" class="accordion-collapse collapse" data-bs-parent="#dt-accordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Dataset:</strong> Iris Dataset (scikit-learn)</p>
+                                        <pre><code class="language-python">from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+
+# Load dataset
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train model
+model = DecisionTreeClassifier(max_depth=4, random_state=42)
+model.fit(X_train, y_train)
+
+# Evaluate
+accuracy = model.score(X_test, y_test)
+print(f"Accuracy: {accuracy:.4f}")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dt-strengths">
@@ -591,6 +684,67 @@
                             points.</p>
                         
                         <div class="accordion accordion-flush" id="lr-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#lr-intuition">
+                                        Intuition / Real-Life Story
+                                    </button>
+                                </h2>
+                                <div id="lr-intuition" class="accordion-collapse collapse" data-bs-parent="#lr-accordion">
+                                    <div class="accordion-body">
+                                        <p>
+                                            Think of house hunting. You notice that bigger houses tend to cost more — there's a 
+                                            <strong>linear relationship</strong> between size and price. If you draw a scatter plot 
+                                            of all the houses you've seen (size vs. price), linear regression finds the 
+                                            <strong>best-fit line</strong> through those points.
+                                        </p>
+                                        <p>
+                                            The line tells you: "For every extra square foot, expect the price to go up by about $X."
+                                            That's the <em>slope</em>. The <em>intercept</em> is the base price even for a tiny house.
+                                            Click any row in the house price dataset above, and watch how the model uses this line to 
+                                            predict what a house of that size should cost — even if you haven't seen that exact size before.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#lr-code">
+                                        Python Training Code
+                                    </button>
+                                </h2>
+                                <div id="lr-code" class="accordion-collapse collapse" data-bs-parent="#lr-accordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Dataset:</strong> California Housing Dataset (scikit-learn)</p>
+                                        <pre><code class="language-python">from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+
+# Load dataset
+housing = fetch_california_housing()
+X, y = housing.data, housing.target
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Scale features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Train model
+model = LinearRegression()
+model.fit(X_train_scaled, y_train)
+
+# Evaluate
+score = model.score(X_test_scaled, y_test)
+print(f"R² Score: {score:.4f}")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#lr-strengths">
@@ -756,6 +910,67 @@
                         <div class="accordion accordion-flush" id="logr-accordion">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#logr-intuition">
+                                        Intuition / Real-Life Story
+                                    </button>
+                                </h2>
+                                <div id="logr-intuition" class="accordion-collapse collapse" data-bs-parent="#logr-accordion">
+                                    <div class="accordion-body">
+                                        <p>
+                                            Imagine your email spam filter. It doesn't just say "spam" or "not spam" — it gives you a 
+                                            <strong>probability dial</strong> from 0% to 100%. An email with 5% uppercase letters? 
+                                            Probably safe (20% spam probability). An email with 70% uppercase and lots of links? 
+                                            That dial spins to 95% spam.
+                                        </p>
+                                        <p>
+                                            Logistic regression uses the <strong>sigmoid function</strong> — an S-shaped curve — to convert 
+                                            any input feature (like uppercase percentage) into a probability between 0 and 1. The curve 
+                                            is steepest in the middle, meaning small feature changes matter most when you're on the fence. 
+                                            Click an email row in the dataset above to see how it calculates that probability step-by-step.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#logr-code">
+                                        Python Training Code
+                                    </button>
+                                </h2>
+                                <div id="logr-code" class="accordion-collapse collapse" data-bs-parent="#logr-accordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Dataset:</strong> Breast Cancer Dataset (scikit-learn)</p>
+                                        <pre><code class="language-python">from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+
+# Load dataset
+cancer = load_breast_cancer()
+X, y = cancer.data, cancer.target
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Scale features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Train model
+model = LogisticRegression(max_iter=1000, random_state=42)
+model.fit(X_train_scaled, y_train)
+
+# Evaluate
+accuracy = model.score(X_test_scaled, y_test)
+print(f"Accuracy: {accuracy:.4f}")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#logr-strengths">
                                         Strengths
                                     </button>
@@ -918,6 +1133,71 @@
                         <div class="accordion accordion-flush" id="nn-accordion">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nn-intuition">
+                                        Intuition / Real-Life Story
+                                    </button>
+                                </h2>
+                                <div id="nn-intuition" class="accordion-collapse collapse" data-bs-parent="#nn-accordion">
+                                    <div class="accordion-body">
+                                        <p>
+                                            Think of your brain: billions of neurons connected in layers. Information comes in through 
+                                            your senses (input layer), gets processed through hidden layers where patterns are recognized, 
+                                            and produces an output (like "that's a cat" or "this traffic light is red").
+                                        </p>
+                                        <p>
+                                            Neural networks mimic this. Each <em>neuron</em> in a layer receives signals from neurons in 
+                                            the previous layer, weights them, and passes a transformed signal forward. By adjusting these 
+                                            weights through training, the network learns complex patterns. Use the input form below to 
+                                            feed values into the network and watch them flow layer-by-layer — just like a thought traveling 
+                                            through your brain.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nn-code">
+                                        Python Training Code
+                                    </button>
+                                </h2>
+                                <div id="nn-code" class="accordion-collapse collapse" data-bs-parent="#nn-accordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Dataset:</strong> Iris Dataset (scikit-learn)</p>
+                                        <pre><code class="language-python">from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+
+# Load dataset
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Scale features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Train model
+model = MLPClassifier(
+    hidden_layer_sizes=(10, 5), 
+    max_iter=1000, 
+    random_state=42
+)
+model.fit(X_train_scaled, y_train)
+
+# Evaluate
+accuracy = model.score(X_test_scaled, y_test)
+print(f"Accuracy: {accuracy:.4f}")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nn-strengths">
                                         Strengths
                                     </button>
@@ -1052,6 +1332,30 @@
                         <p>K-Means is an unsupervised learning algorithm that partitions data into K clusters by minimizing within-cluster variance.</p>
                         
                         <div class="accordion accordion-flush" id="kmeans-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kmeans-intuition">
+                                        Intuition / Real-Life Story
+                                    </button>
+                                </h2>
+                                <div id="kmeans-intuition" class="accordion-collapse collapse" data-bs-parent="#kmeans-accordion">
+                                    <div class="accordion-body">
+                                        <p>
+                                            Imagine you're a store manager trying to group customers. You notice some customers 
+                                            <strong>spend a lot and earn a lot</strong> (VIPs), others <strong>spend little and earn little</strong> 
+                                            (budget-conscious), and some <strong>earn a lot but spend little</strong> (savers). Without knowing 
+                                            the labels, how do you find these natural groups?
+                                        </p>
+                                        <p>
+                                            K-Means does exactly that. It starts by randomly placing <em>K centroids</em> (like placing flags 
+                                            on a map). Then it assigns each customer to their nearest centroid, moves the centroids to the 
+                                            center of their groups, and repeats. Eventually, the centroids settle into positions that represent 
+                                            the "average" of each cluster. Click the "Run Clustering" button to watch this iterative process 
+                                            in action.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kmeans-strengths">
@@ -1210,6 +1514,60 @@
                         <div class="accordion accordion-flush" id="knn-accordion">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#knn-intuition">
+                                        Intuition / Real-Life Story
+                                    </button>
+                                </h2>
+                                <div id="knn-intuition" class="accordion-collapse collapse" data-bs-parent="#knn-accordion">
+                                    <div class="accordion-body">
+                                        <p>
+                                            "You are the average of the five people you spend the most time with" — KNN takes this literally. 
+                                            To classify a new data point, it looks at its <strong>K nearest neighbors</strong> in the training data 
+                                            and asks: "What are most of my neighbors?"
+                                        </p>
+                                        <p>
+                                            For example, if you're trying to decide if a new movie is "Action" or "Comedy", KNN finds the 5 most 
+                                            similar movies (by features like budget, runtime, cast). If 4 out of 5 are Action movies, the new one 
+                                            is probably Action too. Add a test point below and watch how it measures distances, finds neighbors, 
+                                            and takes a vote.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#knn-code">
+                                        Python Training Code
+                                    </button>
+                                </h2>
+                                <div id="knn-code" class="accordion-collapse collapse" data-bs-parent="#knn-accordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Dataset:</strong> Iris Dataset (scikit-learn)</p>
+                                        <pre><code class="language-python">from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+# Load dataset
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train model
+model = KNeighborsClassifier(n_neighbors=5)
+model.fit(X_train, y_train)
+
+# Evaluate
+accuracy = model.score(X_test, y_test)
+print(f"Accuracy: {accuracy:.4f}")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#knn-strengths">
                                         Strengths
                                     </button>
@@ -1346,6 +1704,28 @@
                         <div class="accordion accordion-flush" id="rf-accordion">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rf-intuition">
+                                        Intuition / Real-Life Story
+                                    </button>
+                                </h2>
+                                <div id="rf-intuition" class="accordion-collapse collapse" data-bs-parent="#rf-accordion">
+                                    <div class="accordion-body">
+                                        <p>
+                                            Think of a jury trial. Instead of one judge making a decision, you have <strong>multiple independent 
+                                            judges</strong> (decision trees), each looking at different evidence (random subsets of features and data). 
+                                            They each make their verdict, and then you count votes — the majority wins.
+                                        </p>
+                                        <p>
+                                            Random Forest does exactly this. It builds many decision trees, each trained on a random sample of the 
+                                            data (bagging) and using random subsets of features. This "ensemble" approach reduces overfitting because 
+                                            even if one tree makes a mistake, the others can correct it. It's like asking 100 experts instead of one — 
+                                            the collective wisdom is usually more reliable.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rf-strengths">
                                         Strengths
                                     </button>
@@ -1461,6 +1841,66 @@
                         <div class="accordion accordion-flush" id="svm-accordion">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#svm-intuition">
+                                        Intuition / Real-Life Story
+                                    </button>
+                                </h2>
+                                <div id="svm-intuition" class="accordion-collapse collapse" data-bs-parent="#svm-accordion">
+                                    <div class="accordion-body">
+                                        <p>
+                                            Imagine you have two groups of points on paper — red dots and blue dots. You need to draw a line 
+                                            that separates them. There might be many lines that work, but <strong>SVM finds the line with the 
+                                            maximum margin</strong> — the line that's as far away as possible from the nearest points on either side.
+                                        </p>
+                                        <p>
+                                            The closest points to this optimal line are called <em>support vectors</em> — they're the ones that 
+                                            "support" or define where the line should be. If you remove all other points, the line stays the same. 
+                                            This margin maximization makes SVM robust: new points are less likely to be misclassified if they're 
+                                            near the boundary, because the boundary is as far from the training data as possible.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#svm-code">
+                                        Python Training Code
+                                    </button>
+                                </h2>
+                                <div id="svm-code" class="accordion-collapse collapse" data-bs-parent="#svm-accordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Dataset:</strong> Breast Cancer Dataset (scikit-learn)</p>
+                                        <pre><code class="language-python">from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+
+# Load dataset
+cancer = load_breast_cancer()
+X, y = cancer.data, cancer.target
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Scale features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Train model
+model = SVC(kernel='rbf', random_state=42, probability=True)
+model.fit(X_train_scaled, y_train)
+
+# Evaluate
+accuracy = model.score(X_test_scaled, y_test)
+print(f"Accuracy: {accuracy:.4f}")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#svm-strengths">
                                         Strengths
                                     </button>
@@ -1573,6 +2013,29 @@
                         <p>NLP processes and understands human language. This visualization shows how sentences are tokenized, analyzed, and used to generate responses.</p>
                         
                         <div class="accordion accordion-flush" id="nlp-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nlp-intuition">
+                                        Intuition / Real-Life Story
+                                    </button>
+                                </h2>
+                                <div id="nlp-intuition" class="accordion-collapse collapse" data-bs-parent="#nlp-accordion">
+                                    <div class="accordion-body">
+                                        <p>
+                                            When you read a sentence, your brain doesn't just see words — it breaks them down (tokenization), 
+                                            filters out filler words like "the" and "a" (stop word removal), understands the meaning 
+                                            (stemming/lemmatization), and generates a response based on context.
+                                        </p>
+                                        <p>
+                                            NLP models do something similar. They take raw text and pass it through a pipeline: 
+                                            <strong>tokenization</strong> (splitting into words), <strong>preprocessing</strong> (cleaning, 
+                                            removing stop words), <strong>feature extraction</strong> (converting words to numbers via embeddings), 
+                                            and finally <strong>understanding/generation</strong> (classification, translation, or response). 
+                                            Type a sentence below and watch it get processed step-by-step, just like how your brain processes language.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nlp-strengths">
@@ -1695,6 +2158,15 @@
         </div>
     </section>
 
+    <!-- Playback Speed Control -->
+    <div class="playback-speed-control" id="playback-speed-control">
+        <label for="speed-slider" style="color: white; margin-right: 0.5rem;">Speed:</label>
+        <input type="range" id="speed-slider" min="0.5" max="2" step="0.5" value="1" 
+               oninput="updatePlaybackSpeed(this.value)" 
+               style="width: 100px; margin-right: 0.5rem;">
+        <span id="speed-display" style="color: white; min-width: 50px; display: inline-block;">1.0x</span>
+    </div>
+
     <!-- Console Window -->
     <button class="console-toggle" id="console-toggle" onclick="toggleConsole()">
         <i class="fa fa-terminal"></i>
@@ -1712,6 +2184,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="ml-algorithms.js"></script>
+    <script src="real-models.js"></script>
     <script src="visualizations.js"></script>
     <script src="console.js"></script>
     <script src="animations.js"></script>
