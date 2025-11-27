@@ -117,6 +117,8 @@ function generateSudoku() {
       if (board[i][j] !== 0) {
         input.value = board[i][j]; // Pre-filled number
         input.classList.add("prefilled"); // Add class to distinguish pre-filled numbers
+        input.disabled = false; // Allow editing but mark as prefilled
+        input.readOnly = false;
       } else {
         input.value = ""; // Empty cell for user input
       }

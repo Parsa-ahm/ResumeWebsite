@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ML Algorithm Visualizer - Parsa Ahmadizadeh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        .algorithm-section {
+            margin: 3rem 0;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .algorithm-section:first-of-type {
+            border-top: none;
+        }
+
+        .visualization-container {
+            background-color: #1d2125;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .model-info {
+            background-color: #1d2125;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .data-point {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .data-point:hover {
+            r: 8;
+            filter: brightness(1.2);
+        }
+
+        .data-point.selected {
+            r: 10;
+            stroke: #fff;
+            stroke-width: 2;
+        }
+
+        .data-input-form {
+            background-color: #1d2125;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .custom-data-point {
+            fill: #ff6b6b;
+            stroke: #fff;
+            stroke-width: 2;
+        }
+
+        .decision-tree-node {
+            fill: #1d2125;
+            stroke: rgba(255, 255, 255, 0.3);
+            stroke-width: 2;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .decision-tree-node:hover {
+            fill: #2d3135;
+            stroke: rgba(255, 255, 255, 0.5);
+        }
+
+        .decision-tree-node.selected {
+            fill: #3d4145;
+            stroke: #fff;
+        }
+
+        .decision-tree-text {
+            fill: white;
+            font-size: 12px;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+
+        .nn-layer {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nn-neuron {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #1d2125;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nn-neuron:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: scale(1.1);
+        }
+
+        .nn-neuron.active {
+            background-color: #4a90e2;
+            border-color: #fff;
+        }
+
+        .nn-connection {
+            stroke: rgba(255, 255, 255, 0.2);
+            stroke-width: 2;
+            transition: all 0.3s ease;
+        }
+
+        .nn-connection.active {
+            stroke: #4a90e2;
+            stroke-width: 3;
+        }
+
+        .algorithm-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .algorithm-tab {
+            padding: 0.75rem 1.5rem;
+            background-color: #1d2125;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .algorithm-tab:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .algorithm-tab.active {
+            background-color: #2d3135;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .algorithm-content {
+            display: none;
+        }
+
+        .algorithm-content.active {
+            display: block;
+        }
+
+        .strength-weakness {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .strength-weakness {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Console Window */
+        .console-window {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 400px;
+            max-height: 500px;
+            background-color: #1d2125;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        .console-window.open {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .console-header {
+            background-color: #2d3135;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+
+        .console-header h5 {
+            margin: 0;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .console-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+        }
+
+        .console-body {
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 400px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #4ade80;
+            background-color: #0d1117;
+        }
+
+        .console-line {
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .console-line.info {
+            color: #60a5fa;
+        }
+
+        .console-line.success {
+            color: #4ade80;
+        }
+
+        .console-line.warning {
+            color: #fbbf24;
+        }
+
+        .console-line.error {
+            color: #f87171;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .console-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .console-toggle:hover {
+            background-color: #357abd;
+            transform: scale(1.1);
+        }
+
+        /* Real Dataset Tables */
+        .dataset-table-container {
+            max-height: 180px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            transition: max-height 0.3s ease;
+        }
+
+        .dataset-table-container.expanded {
+            max-height: 500px;
+        }
+
+        .dataset-table-toggle {
+            cursor: pointer;
+            color: #60a5fa;
+            text-decoration: underline;
+            margin-top: 0.5rem;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .dataset-table-toggle:hover {
+            color: #3b82f6;
+        }
+
+        .dataset-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .dataset-table th,
+        .dataset-table td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dataset-table th {
+            background-color: #2d3135;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .dataset-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Animation styles */
+        .animated-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawPath 2s ease-in-out forwards;
+        }
+
+        @keyframes drawPath {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .pulse {
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .accordion-button {
+            background-color: #1d2125;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #2d3135;
+            color: white;
+        }
+
+        .accordion-button:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+        }
+
+        .accordion-body {
+            background-color: #1d2125;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar will be loaded here dynamically -->
+    <script src="../components/navbar-loader.js"></script>
+
+    <!-- Header Section -->
+    <section id="header">
+        <div class="container">
+            <div class="row">
+                <div class="">
+                    <h1 class="">
+                        ML Algorithm Visualizer <br />
+                        <small class="text-body-secondary"> Interactive Machine Learning </small>
+                    </h1>
+                    <p class="mt-3">
+                        An interactive tool to visualize and understand different machine learning algorithms. Explore
+                        Decision Trees, Regression models, Neural Networks, and more. Click on data points to see how
+                        they move through each model, and add your own data to see real-time predictions and
+                        classifications.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Algorithm Selection Tabs -->
+    <section class="py-5">
+        <div class="container">
+            <div class="algorithm-tabs" id="algorithm-tabs">
+                <div class="algorithm-tab active" data-algorithm="decision-tree">Decision Tree</div>
+                <div class="algorithm-tab" data-algorithm="linear-regression">Linear Regression</div>
+                <div class="algorithm-tab" data-algorithm="logistic-regression">Logistic Regression</div>
+                <div class="algorithm-tab" data-algorithm="neural-network">Neural Network (ANN)</div>
+                <div class="algorithm-tab" data-algorithm="k-means">K-Means Clustering</div>
+                <div class="algorithm-tab" data-algorithm="knn">KNN</div>
+                <div class="algorithm-tab" data-algorithm="random-forest">Random Forest</div>
+                <div class="algorithm-tab" data-algorithm="svm">SVM</div>
+                <div class="algorithm-tab" data-algorithm="nlp">NLP</div>
+            </div>
+
+            <!-- Decision Tree Section -->
+            <div id="decision-tree" class="algorithm-content active">
+                <div class="algorithm-section">
+                    <h2>Decision Tree</h2>
+                    <div class="model-info">
+                        <h4>About Decision Trees</h4>
+                        <p>A decision tree is a tree-like model used for classification and regression. It splits data
+                            based on feature values, creating a hierarchical structure of decisions.</p>
+                        
+                        <div class="accordion accordion-flush" id="dt-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dt-strengths">
+                                        Strengths
+                                    </button>
+                                </h2>
+                                <div id="dt-strengths" class="accordion-collapse collapse" data-bs-parent="#dt-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Easy to interpret and visualize</li>
+                                            <li>Requires little data preprocessing</li>
+                                            <li>Can handle both numerical and categorical data</li>
+                                            <li>Non-parametric (no assumptions about data distribution)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dt-weaknesses">
+                                        Weaknesses
+                                    </button>
+                                </h2>
+                                <div id="dt-weaknesses" class="accordion-collapse collapse" data-bs-parent="#dt-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Prone to overfitting</li>
+                                            <li>Unstable (small data changes can lead to different trees)</li>
+                                            <li>Biased towards features with more levels</li>
+                                            <li>Can create overly complex trees</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dt-usecases">
+                                        Use Cases
+                                    </button>
+                                </h2>
+                                <div id="dt-usecases" class="accordion-collapse collapse" data-bs-parent="#dt-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Classification problems with interpretability requirements</li>
+                                            <li>Feature selection</li>
+                                            <li>When you need explainable AI/ML decisions</li>
+                                            <li>Baseline models for complex problems</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dt-preprocessing">
+                                        Pre/Post Processing Requirements
+                                    </button>
+                                </h2>
+                                <div id="dt-preprocessing" class="accordion-collapse collapse" data-bs-parent="#dt-accordion">
+                                    <div class="accordion-body">
+                                        <h6>Pre-processing:</h6>
+                                        <ul>
+                                            <li>Handle missing values (imputation or removal)</li>
+                                            <li>Encode categorical variables (one-hot encoding)</li>
+                                            <li>Feature scaling not required but can help</li>
+                                            <li>Remove highly correlated features</li>
+                                        </ul>
+                                        <h6>Post-processing:</h6>
+                                        <ul>
+                                            <li>Pruning to reduce overfitting</li>
+                                            <li>Feature importance analysis</li>
+                                            <li>Visualization of tree structure</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dt-industry">
+                                        Industry Applications
+                                    </button>
+                                </h2>
+                                <div id="dt-industry" class="accordion-collapse collapse" data-bs-parent="#dt-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Healthcare:</strong> Medical diagnosis, treatment recommendations</li>
+                                            <li><strong>Finance:</strong> Credit scoring, fraud detection</li>
+                                            <li><strong>Marketing:</strong> Customer segmentation, campaign targeting</li>
+                                            <li><strong>Manufacturing:</strong> Quality control, defect detection</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dt-dataset">
+                                        Real-World Example: Loan Approval Dataset
+                                    </button>
+                                </h2>
+                                <div id="dt-dataset" class="accordion-collapse collapse" data-bs-parent="#dt-accordion">
+                                    <div class="accordion-body">
+                                        <p>This dataset contains loan application information used to predict loan approval.</p>
+                                        <div class="dataset-table-container" id="dt-dataset-container">
+                                            <table class="dataset-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Age</th>
+                                                        <th>Income</th>
+                                                        <th>Credit Score</th>
+                                                        <th>Loan Amount</th>
+                                                        <th>Approved</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="dt-dataset-body">
+                                                    <!-- Will be populated by JavaScript -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <span class="dataset-table-toggle" onclick="toggleDatasetTable('dt-dataset-container')">Show more rows</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="visualization-container">
+                        <h4>Interactive Decision Tree Visualization</h4>
+                        <p>Click on data points below to see how they traverse the decision tree.</p>
+                        <svg id="decision-tree-svg" width="100%" height="600" style="background-color: #1d2125; border-radius: 0.5rem;"></svg>
+                    </div>
+                    <div class="data-input-form">
+                        <h4>Add Your Own Data Point</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Feature 1 (Age):</label>
+                                <input type="number" id="dt-feature1" class="form-control" value="25" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Feature 2 (Income):</label>
+                                <input type="number" id="dt-feature2" class="form-control" value="50000" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-primary w-100" onclick="addDecisionTreePoint()">Add & Classify</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linear Regression Section -->
+            <div id="linear-regression" class="algorithm-content">
+                <div class="algorithm-section">
+                    <h2>Linear Regression</h2>
+                    <div class="model-info">
+                        <h4>About Linear Regression</h4>
+                        <p>Linear regression models the relationship between a dependent variable and one or more
+                            independent variables using a linear function. It finds the best-fit line through data
+                            points.</p>
+                        
+                        <div class="accordion accordion-flush" id="lr-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#lr-strengths">
+                                        Strengths
+                                    </button>
+                                </h2>
+                                <div id="lr-strengths" class="accordion-collapse collapse" data-bs-parent="#lr-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Simple and fast</li>
+                                            <li>Easy to interpret</li>
+                                            <li>No hyperparameter tuning required</li>
+                                            <li>Less prone to overfitting</li>
+                                            <li>Provides statistical insights (p-values, confidence intervals)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#lr-weaknesses">
+                                        Weaknesses
+                                    </button>
+                                </h2>
+                                <div id="lr-weaknesses" class="accordion-collapse collapse" data-bs-parent="#lr-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Assumes linear relationship</li>
+                                            <li>Sensitive to outliers</li>
+                                            <li>Requires feature scaling for multiple features</li>
+                                            <li>Cannot capture complex patterns</li>
+                                            <li>Assumes independence of observations</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#lr-usecases">
+                                        Use Cases
+                                    </button>
+                                </h2>
+                                <div id="lr-usecases" class="accordion-collapse collapse" data-bs-parent="#lr-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Predicting continuous values (sales, prices, temperatures)</li>
+                                            <li>When there's a linear relationship between variables</li>
+                                            <li>Baseline model for regression problems</li>
+                                            <li>When interpretability is important</li>
+                                            <li>Risk assessment and forecasting</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#lr-preprocessing">
+                                        Pre/Post Processing Requirements
+                                    </button>
+                                </h2>
+                                <div id="lr-preprocessing" class="accordion-collapse collapse" data-bs-parent="#lr-accordion">
+                                    <div class="accordion-body">
+                                        <h6>Pre-processing:</h6>
+                                        <ul>
+                                            <li>Handle missing values (mean/median imputation or removal)</li>
+                                            <li>Feature scaling/normalization (StandardScaler or MinMaxScaler)</li>
+                                            <li>Remove or transform outliers</li>
+                                            <li>Check for multicollinearity (VIF analysis)</li>
+                                            <li>Feature selection if needed</li>
+                                        </ul>
+                                        <h6>Post-processing:</h6>
+                                        <ul>
+                                            <li>Residual analysis to check assumptions</li>
+                                            <li>Calculate R², RMSE, MAE metrics</li>
+                                            <li>Cross-validation for model validation</li>
+                                            <li>Interpret coefficients and significance</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#lr-industry">
+                                        Industry Applications
+                                    </button>
+                                </h2>
+                                <div id="lr-industry" class="accordion-collapse collapse" data-bs-parent="#lr-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Finance:</strong> Predicting stock prices, credit scoring, risk assessment</li>
+                                            <li><strong>Healthcare:</strong> Predicting patient outcomes, drug dosage estimation</li>
+                                            <li><strong>Real Estate:</strong> House price prediction based on features</li>
+                                            <li><strong>Marketing:</strong> Sales forecasting, customer lifetime value</li>
+                                            <li><strong>Economics:</strong> GDP prediction, inflation forecasting</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#lr-dataset">
+                                        Real-World Example: House Price Dataset
+                                    </button>
+                                </h2>
+                                <div id="lr-dataset" class="accordion-collapse collapse" data-bs-parent="#lr-accordion">
+                                    <div class="accordion-body">
+                                        <p>This dataset contains house features used to predict sale prices.</p>
+                                        <div class="dataset-table-container" id="lr-dataset-container">
+                                            <table class="dataset-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Size (sqft)</th>
+                                                        <th>Bedrooms</th>
+                                                        <th>Age (years)</th>
+                                                        <th>Price ($)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="lr-dataset-body">
+                                                    <!-- Will be populated by JavaScript -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <span class="dataset-table-toggle" onclick="toggleDatasetTable('lr-dataset-container')">Show more rows</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="visualization-container">
+                        <h4>Interactive Linear Regression</h4>
+                        <p>Click on data points to see their prediction on the regression line.</p>
+                        <canvas id="linear-regression-chart" style="max-height: 500px;"></canvas>
+                    </div>
+                    <div class="data-input-form">
+                        <h4>Add Your Own Data Point</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>X Value:</label>
+                                <input type="number" id="lr-x" class="form-control" value="5" step="0.1" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Y Value:</label>
+                                <input type="number" id="lr-y" class="form-control" value="10" step="0.1" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-primary w-100" onclick="addLinearRegressionPoint()">Add & Predict</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logistic Regression Section -->
+            <div id="logistic-regression" class="algorithm-content">
+                <div class="algorithm-section">
+                    <h2>Logistic Regression</h2>
+                    <div class="model-info">
+                        <h4>About Logistic Regression</h4>
+                        <p>Logistic regression is used for binary classification. It uses the logistic function to model
+                            the probability of a binary outcome, producing an S-shaped curve.</p>
+                        
+                        <div class="accordion accordion-flush" id="logr-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#logr-strengths">
+                                        Strengths
+                                    </button>
+                                </h2>
+                                <div id="logr-strengths" class="accordion-collapse collapse" data-bs-parent="#logr-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Simple and interpretable</li>
+                                            <li>Outputs probabilities</li>
+                                            <li>Less prone to overfitting</li>
+                                            <li>Doesn't require feature scaling</li>
+                                            <li>Provides feature importance (odds ratios)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#logr-weaknesses">
+                                        Weaknesses
+                                    </button>
+                                </h2>
+                                <div id="logr-weaknesses" class="accordion-collapse collapse" data-bs-parent="#logr-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Assumes linear decision boundary</li>
+                                            <li>Requires large sample sizes</li>
+                                            <li>Sensitive to outliers</li>
+                                            <li>Cannot model complex relationships</li>
+                                            <li>Requires no perfect multicollinearity</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#logr-usecases">
+                                        Use Cases
+                                    </button>
+                                </h2>
+                                <div id="logr-usecases" class="accordion-collapse collapse" data-bs-parent="#logr-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Binary classification problems</li>
+                                            <li>When probability estimates are needed</li>
+                                            <li>Baseline for classification tasks</li>
+                                            <li>Medical diagnosis and risk assessment</li>
+                                            <li>Email spam detection, fraud detection</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#logr-preprocessing">
+                                        Pre/Post Processing Requirements
+                                    </button>
+                                </h2>
+                                <div id="logr-preprocessing" class="accordion-collapse collapse" data-bs-parent="#logr-accordion">
+                                    <div class="accordion-body">
+                                        <h6>Pre-processing:</h6>
+                                        <ul>
+                                            <li>Handle missing values</li>
+                                            <li>Encode categorical variables (one-hot encoding)</li>
+                                            <li>Feature scaling optional but can improve convergence</li>
+                                            <li>Check for class imbalance (use SMOTE or class weights)</li>
+                                            <li>Remove highly correlated features</li>
+                                        </ul>
+                                        <h6>Post-processing:</h6>
+                                        <ul>
+                                            <li>Evaluate with confusion matrix, ROC-AUC, precision/recall</li>
+                                            <li>Threshold tuning for optimal precision/recall balance</li>
+                                            <li>Cross-validation for model validation</li>
+                                            <li>Interpret odds ratios and coefficients</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#logr-industry">
+                                        Industry Applications
+                                    </button>
+                                </h2>
+                                <div id="logr-industry" class="accordion-collapse collapse" data-bs-parent="#logr-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Healthcare:</strong> Disease diagnosis, patient risk stratification</li>
+                                            <li><strong>Finance:</strong> Credit approval, fraud detection, loan default prediction</li>
+                                            <li><strong>Marketing:</strong> Customer churn prediction, conversion probability</li>
+                                            <li><strong>E-commerce:</strong> Product recommendation, purchase probability</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#logr-dataset">
+                                        Real-World Example: Email Spam Dataset
+                                    </button>
+                                </h2>
+                                <div id="logr-dataset" class="accordion-collapse collapse" data-bs-parent="#logr-accordion">
+                                    <div class="accordion-body">
+                                        <p>This dataset contains email features used to classify spam vs. legitimate emails.</p>
+                                        <div class="dataset-table-container" id="logr-dataset-container">
+                                            <table class="dataset-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Word Count</th>
+                                                        <th>Links</th>
+                                                        <th>Uppercase %</th>
+                                                        <th>Spam</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="logr-dataset-body">
+                                                    <!-- Will be populated by JavaScript -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <span class="dataset-table-toggle" onclick="toggleDatasetTable('logr-dataset-container')">Show more rows</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="visualization-container">
+                        <h4>Interactive Logistic Regression</h4>
+                        <p>Click on data points to see their classification probability.</p>
+                        <canvas id="logistic-regression-chart" style="max-height: 500px;"></canvas>
+                    </div>
+                    <div class="data-input-form">
+                        <h4>Add Your Own Data Point</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Feature 1:</label>
+                                <input type="number" id="logr-x" class="form-control" value="0.5" step="0.1" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Class (0 or 1):</label>
+                                <input type="number" id="logr-y" class="form-control" value="0" min="0" max="1" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-primary w-100" onclick="addLogisticRegressionPoint()">Add & Classify</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Neural Network Section -->
+            <div id="neural-network" class="algorithm-content">
+                <div class="algorithm-section">
+                    <h2>Artificial Neural Network (ANN)</h2>
+                    <div class="model-info">
+                        <h4>About Neural Networks</h4>
+                        <p>Neural networks are computing systems inspired by biological neural networks. They consist of
+                            interconnected nodes (neurons) organized in layers, capable of learning complex patterns.</p>
+                        
+                        <div class="accordion accordion-flush" id="nn-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nn-strengths">
+                                        Strengths
+                                    </button>
+                                </h2>
+                                <div id="nn-strengths" class="accordion-collapse collapse" data-bs-parent="#nn-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Can model complex non-linear relationships</li>
+                                            <li>Learns features automatically</li>
+                                            <li>Works well with large datasets</li>
+                                            <li>Generalizes well when properly regularized</li>
+                                            <li>Flexible architecture for various tasks</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nn-weaknesses">
+                                        Weaknesses
+                                    </button>
+                                </h2>
+                                <div id="nn-weaknesses" class="accordion-collapse collapse" data-bs-parent="#nn-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Black box (hard to interpret)</li>
+                                            <li>Requires large amounts of data</li>
+                                            <li>Computationally expensive</li>
+                                            <li>Prone to overfitting</li>
+                                            <li>Requires hyperparameter tuning</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nn-usecases">
+                                        Use Cases
+                                    </button>
+                                </h2>
+                                <div id="nn-usecases" class="accordion-collapse collapse" data-bs-parent="#nn-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Complex pattern recognition</li>
+                                            <li>Image and speech recognition</li>
+                                            <li>Natural language processing</li>
+                                            <li>When you have large datasets</li>
+                                            <li>Computer vision, time series forecasting</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nn-preprocessing">
+                                        Pre/Post Processing Requirements
+                                    </button>
+                                </h2>
+                                <div id="nn-preprocessing" class="accordion-collapse collapse" data-bs-parent="#nn-accordion">
+                                    <div class="accordion-body">
+                                        <h6>Pre-processing:</h6>
+                                        <ul>
+                                            <li>Feature scaling/normalization (critical for neural networks)</li>
+                                            <li>Handle missing values</li>
+                                            <li>Encode categorical variables</li>
+                                            <li>Data augmentation (for images/text)</li>
+                                            <li>Train/validation/test split</li>
+                                        </ul>
+                                        <h6>Post-processing:</h6>
+                                        <ul>
+                                            <li>Early stopping to prevent overfitting</li>
+                                            <li>Dropout, batch normalization</li>
+                                            <li>Model evaluation on test set</li>
+                                            <li>Hyperparameter tuning (learning rate, layers, neurons)</li>
+                                            <li>Visualization of learning curves</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nn-industry">
+                                        Industry Applications
+                                    </button>
+                                </h2>
+                                <div id="nn-industry" class="accordion-collapse collapse" data-bs-parent="#nn-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Healthcare:</strong> Medical image analysis, drug discovery</li>
+                                            <li><strong>Automotive:</strong> Autonomous driving, object detection</li>
+                                            <li><strong>Finance:</strong> Algorithmic trading, fraud detection</li>
+                                            <li><strong>Retail:</strong> Recommendation systems, demand forecasting</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="visualization-container">
+                        <h4>Interactive Neural Network Visualization</h4>
+                        <p>Watch how data flows through the network layers. Click on input nodes to activate them.</p>
+                        <div id="neural-network-viz" style="display: flex; justify-content: center; align-items: center; min-height: 500px; position: relative;">
+                            <svg id="nn-svg" width="800" height="500" style="background-color: #1d2125; border-radius: 0.5rem;"></svg>
+                        </div>
+                    </div>
+                    <div class="data-input-form">
+                        <h4>Input Values</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Input 1:</label>
+                                <input type="number" id="nn-input1" class="form-control" value="0.5" step="0.1" min="0" max="1" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Input 2:</label>
+                                <input type="number" id="nn-input2" class="form-control" value="0.3" step="0.1" min="0" max="1" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-primary w-100" onclick="propagateNeuralNetwork()">Forward Pass</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- K-Means Clustering Section -->
+            <div id="k-means" class="algorithm-content">
+                <div class="algorithm-section">
+                    <h2>K-Means Clustering</h2>
+                    <div class="model-info">
+                        <h4>About K-Means Clustering</h4>
+                        <p>K-Means is an unsupervised learning algorithm that partitions data into K clusters by minimizing within-cluster variance.</p>
+                        
+                        <div class="accordion accordion-flush" id="kmeans-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kmeans-strengths">
+                                        Strengths
+                                    </button>
+                                </h2>
+                                <div id="kmeans-strengths" class="accordion-collapse collapse" data-bs-parent="#kmeans-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Simple and fast</li>
+                                            <li>Works well with spherical clusters</li>
+                                            <li>Scales to large datasets</li>
+                                            <li>Easy to implement</li>
+                                            <li>Converges quickly</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kmeans-weaknesses">
+                                        Weaknesses
+                                    </button>
+                                </h2>
+                                <div id="kmeans-weaknesses" class="accordion-collapse collapse" data-bs-parent="#kmeans-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Requires specifying K beforehand</li>
+                                            <li>Sensitive to initial centroids</li>
+                                            <li>Assumes clusters are spherical</li>
+                                            <li>Doesn't work well with varying cluster sizes</li>
+                                            <li>Sensitive to outliers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kmeans-usecases">
+                                        Use Cases
+                                    </button>
+                                </h2>
+                                <div id="kmeans-usecases" class="accordion-collapse collapse" data-bs-parent="#kmeans-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Customer segmentation</li>
+                                            <li>Image compression</li>
+                                            <li>Anomaly detection</li>
+                                            <li>Data preprocessing</li>
+                                            <li>Market research, document clustering</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kmeans-preprocessing">
+                                        Pre/Post Processing Requirements
+                                    </button>
+                                </h2>
+                                <div id="kmeans-preprocessing" class="accordion-collapse collapse" data-bs-parent="#kmeans-accordion">
+                                    <div class="accordion-body">
+                                        <h6>Pre-processing:</h6>
+                                        <ul>
+                                            <li>Feature scaling/normalization (critical - distances matter)</li>
+                                            <li>Handle missing values</li>
+                                            <li>Remove or handle outliers</li>
+                                            <li>Determine optimal K (elbow method, silhouette score)</li>
+                                            <li>PCA for dimensionality reduction if needed</li>
+                                        </ul>
+                                        <h6>Post-processing:</h6>
+                                        <ul>
+                                            <li>Evaluate with silhouette score, inertia (within-cluster sum of squares)</li>
+                                            <li>Visualize clusters</li>
+                                            <li>Analyze cluster characteristics</li>
+                                            <li>Interpret and label clusters</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kmeans-industry">
+                                        Industry Applications
+                                    </button>
+                                </h2>
+                                <div id="kmeans-industry" class="accordion-collapse collapse" data-bs-parent="#kmeans-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Marketing:</strong> Customer segmentation for targeted campaigns</li>
+                                            <li><strong>Retail:</strong> Product categorization, inventory management</li>
+                                            <li><strong>Image Processing:</strong> Color quantization, image compression</li>
+                                            <li><strong>Biology:</strong> Gene expression analysis, species classification</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kmeans-dataset">
+                                        Real-World Example: Customer Segmentation Dataset
+                                    </button>
+                                </h2>
+                                <div id="kmeans-dataset" class="accordion-collapse collapse" data-bs-parent="#kmeans-accordion">
+                                    <div class="accordion-body">
+                                        <p>This dataset contains customer purchase behavior for market segmentation.</p>
+                                        <div class="dataset-table-container" id="kmeans-dataset-container">
+                                            <table class="dataset-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Annual Income ($)</th>
+                                                        <th>Spending Score</th>
+                                                        <th>Age</th>
+                                                        <th>Cluster</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="kmeans-dataset-body">
+                                                    <!-- Will be populated by JavaScript -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <span class="dataset-table-toggle" onclick="toggleDatasetTable('kmeans-dataset-container')">Show more rows</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="visualization-container">
+                        <h4>Interactive K-Means Clustering</h4>
+                        <canvas id="k-means-chart" style="max-height: 500px;"></canvas>
+                    </div>
+                    <div class="data-input-form">
+                        <h4>Parameters</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Number of Clusters (K):</label>
+                                <input type="number" id="k-means-k" class="form-control" value="3" min="2" max="10" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-primary w-100" onclick="runKMeans()">Run Clustering</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KNN Section -->
+            <div id="knn" class="algorithm-content">
+                <div class="algorithm-section">
+                    <h2>K-Nearest Neighbors (KNN)</h2>
+                    <div class="model-info">
+                        <h4>About KNN</h4>
+                        <p>KNN is a simple, instance-based learning algorithm that classifies data points based on the majority class of their K nearest neighbors.</p>
+                        
+                        <div class="accordion accordion-flush" id="knn-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#knn-strengths">
+                                        Strengths
+                                    </button>
+                                </h2>
+                                <div id="knn-strengths" class="accordion-collapse collapse" data-bs-parent="#knn-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Simple and intuitive</li>
+                                            <li>No training phase</li>
+                                            <li>Works for classification and regression</li>
+                                            <li>Adapts easily to new data</li>
+                                            <li>Non-parametric (no assumptions about data distribution)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#knn-weaknesses">
+                                        Weaknesses
+                                    </button>
+                                </h2>
+                                <div id="knn-weaknesses" class="accordion-collapse collapse" data-bs-parent="#knn-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Computationally expensive at prediction time</li>
+                                            <li>Sensitive to irrelevant features</li>
+                                            <li>Sensitive to scale of features</li>
+                                            <li>Requires storing all training data</li>
+                                            <li>Performance degrades with high dimensions</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#knn-usecases">
+                                        Use Cases
+                                    </button>
+                                </h2>
+                                <div id="knn-usecases" class="accordion-collapse collapse" data-bs-parent="#knn-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Recommendation systems</li>
+                                            <li>Pattern recognition</li>
+                                            <li>Image classification</li>
+                                            <li>When data is non-linear</li>
+                                            <li>Text classification, medical diagnosis</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#knn-preprocessing">
+                                        Pre/Post Processing Requirements
+                                    </button>
+                                </h2>
+                                <div id="knn-preprocessing" class="accordion-collapse collapse" data-bs-parent="#knn-accordion">
+                                    <div class="accordion-body">
+                                        <h6>Pre-processing:</h6>
+                                        <ul>
+                                            <li>Feature scaling/normalization (critical - distance-based)</li>
+                                            <li>Handle missing values</li>
+                                            <li>Feature selection (remove irrelevant features)</li>
+                                            <li>Handle outliers</li>
+                                            <li>Dimensionality reduction if needed (PCA)</li>
+                                        </ul>
+                                        <h6>Post-processing:</h6>
+                                        <ul>
+                                            <li>Choose optimal K (cross-validation, odd K for binary classification)</li>
+                                            <li>Evaluate with accuracy, confusion matrix</li>
+                                            <li>Consider distance weighting</li>
+                                            <li>Handle imbalanced classes</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#knn-industry">
+                                        Industry Applications
+                                    </button>
+                                </h2>
+                                <div id="knn-industry" class="accordion-collapse collapse" data-bs-parent="#knn-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>E-commerce:</strong> Product recommendations, similar item suggestions</li>
+                                            <li><strong>Healthcare:</strong> Disease classification based on symptoms</li>
+                                            <li><strong>Finance:</strong> Credit risk assessment</li>
+                                            <li><strong>Security:</strong> Intrusion detection systems</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="visualization-container">
+                        <h4>Interactive KNN Visualization</h4>
+                        <canvas id="knn-chart" style="max-height: 500px;"></canvas>
+                    </div>
+                    <div class="data-input-form">
+                        <h4>Add Test Point</h4>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>X:</label>
+                                <input type="number" id="knn-x" class="form-control" value="0.5" step="0.1" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>Y:</label>
+                                <input type="number" id="knn-y" class="form-control" value="0.5" step="0.1" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>K:</label>
+                                <input type="number" id="knn-k" class="form-control" value="3" min="1" max="10" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-primary w-100" onclick="classifyKNN()">Classify</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Random Forest Section -->
+            <div id="random-forest" class="algorithm-content">
+                <div class="algorithm-section">
+                    <h2>Random Forest</h2>
+                    <div class="model-info">
+                        <h4>About Random Forest</h4>
+                        <p>Random Forest is an ensemble learning method that combines multiple decision trees, using bagging and feature randomness to create a robust model.</p>
+                        
+                        <div class="accordion accordion-flush" id="rf-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rf-strengths">
+                                        Strengths
+                                    </button>
+                                </h2>
+                                <div id="rf-strengths" class="accordion-collapse collapse" data-bs-parent="#rf-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Reduces overfitting</li>
+                                            <li>Handles large datasets well</li>
+                                            <li>Feature importance scores</li>
+                                            <li>Works for classification and regression</li>
+                                            <li>Handles missing values well</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rf-weaknesses">
+                                        Weaknesses
+                                    </button>
+                                </h2>
+                                <div id="rf-weaknesses" class="accordion-collapse collapse" data-bs-parent="#rf-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Less interpretable than single trees</li>
+                                            <li>Can be slow for real-time predictions</li>
+                                            <li>Requires more memory</li>
+                                            <li>Biased towards categorical features</li>
+                                            <li>Doesn't extrapolate well beyond training range</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rf-usecases">
+                                        Use Cases
+                                    </button>
+                                </h2>
+                                <div id="rf-usecases" class="accordion-collapse collapse" data-bs-parent="#rf-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Feature selection</li>
+                                            <li>High-dimensional data</li>
+                                            <li>When interpretability is less critical</li>
+                                            <li>Structured/tabular data</li>
+                                            <li>Competitions and benchmarks (often strong baseline)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rf-preprocessing">
+                                        Pre/Post Processing Requirements
+                                    </button>
+                                </h2>
+                                <div id="rf-preprocessing" class="accordion-collapse collapse" data-bs-parent="#rf-accordion">
+                                    <div class="accordion-body">
+                                        <h6>Pre-processing:</h6>
+                                        <ul>
+                                            <li>Handle missing values (can use mean/median imputation)</li>
+                                            <li>Encode categorical variables (label encoding or one-hot)</li>
+                                            <li>Feature scaling not required but can help</li>
+                                            <li>Feature selection optional (RF does this internally)</li>
+                                        </ul>
+                                        <h6>Post-processing:</h6>
+                                        <ul>
+                                            <li>Tune hyperparameters (n_estimators, max_depth, min_samples_split)</li>
+                                            <li>Analyze feature importance</li>
+                                            <li>Cross-validation for model evaluation</li>
+                                            <li>OOB (Out-of-Bag) score for quick validation</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rf-industry">
+                                        Industry Applications
+                                    </button>
+                                </h2>
+                                <div id="rf-industry" class="accordion-collapse collapse" data-bs-parent="#rf-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Finance:</strong> Credit risk modeling, fraud detection</li>
+                                            <li><strong>Healthcare:</strong> Disease prediction, patient outcome analysis</li>
+                                            <li><strong>Retail:</strong> Inventory management, demand forecasting</li>
+                                            <li><strong>Marketing:</strong> Customer segmentation, campaign optimization</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="visualization-container">
+                        <h4>Random Forest Visualization</h4>
+                        <p>Random Forest combines multiple decision trees. Click to see ensemble prediction.</p>
+                        <div id="random-forest-viz" style="min-height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SVM Section -->
+            <div id="svm" class="algorithm-content">
+                <div class="algorithm-section">
+                    <h2>Support Vector Machine (SVM)</h2>
+                    <div class="model-info">
+                        <h4>About SVM</h4>
+                        <p>SVM finds the optimal hyperplane that separates classes with the maximum margin, using support vectors.</p>
+                        
+                        <div class="accordion accordion-flush" id="svm-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#svm-strengths">
+                                        Strengths
+                                    </button>
+                                </h2>
+                                <div id="svm-strengths" class="accordion-collapse collapse" data-bs-parent="#svm-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Effective in high dimensions</li>
+                                            <li>Memory efficient</li>
+                                            <li>Works well with clear margin of separation</li>
+                                            <li>Versatile (different kernels: linear, RBF, polynomial)</li>
+                                            <li>Robust to overfitting in high-dimensional spaces</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#svm-weaknesses">
+                                        Weaknesses
+                                    </button>
+                                </h2>
+                                <div id="svm-weaknesses" class="accordion-collapse collapse" data-bs-parent="#svm-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Doesn't perform well with large datasets</li>
+                                            <li>Poor performance on noisy data</li>
+                                            <li>Black box model (especially with non-linear kernels)</li>
+                                            <li>Sensitive to feature scaling</li>
+                                            <li>Requires careful hyperparameter tuning</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#svm-usecases">
+                                        Use Cases
+                                    </button>
+                                </h2>
+                                <div id="svm-usecases" class="accordion-collapse collapse" data-bs-parent="#svm-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Text classification</li>
+                                            <li>Image classification</li>
+                                            <li>Face detection</li>
+                                            <li>When classes are well-separated</li>
+                                            <li>Handwriting recognition, bioinformatics</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#svm-preprocessing">
+                                        Pre/Post Processing Requirements
+                                    </button>
+                                </h2>
+                                <div id="svm-preprocessing" class="accordion-collapse collapse" data-bs-parent="#svm-accordion">
+                                    <div class="accordion-body">
+                                        <h6>Pre-processing:</h6>
+                                        <ul>
+                                            <li>Feature scaling/normalization (critical - uses distances)</li>
+                                            <li>Handle missing values</li>
+                                            <li>Remove outliers</li>
+                                            <li>Handle imbalanced classes (use class weights)</li>
+                                        </ul>
+                                        <h6>Post-processing:</h6>
+                                        <ul>
+                                            <li>Tune hyperparameters (C, gamma for RBF, kernel choice)</li>
+                                            <li>Cross-validation for model selection</li>
+                                            <li>Analyze support vectors</li>
+                                            <li>Grid search for optimal parameters</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#svm-industry">
+                                        Industry Applications
+                                    </button>
+                                </h2>
+                                <div id="svm-industry" class="accordion-collapse collapse" data-bs-parent="#svm-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Text Analysis:</strong> Spam detection, sentiment analysis, document classification</li>
+                                            <li><strong>Computer Vision:</strong> Image classification, object recognition</li>
+                                            <li><strong>Biology:</strong> Protein classification, gene classification</li>
+                                            <li><strong>Security:</strong> Intrusion detection, malware classification</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="visualization-container">
+                        <h4>Interactive SVM Visualization</h4>
+                        <canvas id="svm-chart" style="max-height: 500px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NLP Section -->
+            <div id="nlp" class="algorithm-content">
+                <div class="algorithm-section">
+                    <h2>Natural Language Processing (NLP)</h2>
+                    <div class="model-info">
+                        <h4>About NLP</h4>
+                        <p>NLP processes and understands human language. This visualization shows how sentences are tokenized, analyzed, and used to generate responses.</p>
+                        
+                        <div class="accordion accordion-flush" id="nlp-accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nlp-strengths">
+                                        Strengths
+                                    </button>
+                                </h2>
+                                <div id="nlp-strengths" class="accordion-collapse collapse" data-bs-parent="#nlp-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Enables human-computer interaction</li>
+                                            <li>Extracts insights from text</li>
+                                            <li>Automates text processing</li>
+                                            <li>Powerful for many applications</li>
+                                            <li>Can handle multiple languages with proper models</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nlp-weaknesses">
+                                        Weaknesses
+                                    </button>
+                                </h2>
+                                <div id="nlp-weaknesses" class="accordion-collapse collapse" data-bs-parent="#nlp-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Context understanding is challenging</li>
+                                            <li>Language ambiguity</li>
+                                            <li>Requires large amounts of data</li>
+                                            <li>Domain-specific models needed</li>
+                                            <li>Cultural and contextual nuances difficult to capture</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nlp-usecases">
+                                        Use Cases
+                                    </button>
+                                </h2>
+                                <div id="nlp-usecases" class="accordion-collapse collapse" data-bs-parent="#nlp-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Chatbots and virtual assistants</li>
+                                            <li>Sentiment analysis</li>
+                                            <li>Machine translation</li>
+                                            <li>Text summarization</li>
+                                            <li>Named entity recognition, question answering</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nlp-preprocessing">
+                                        Pre/Post Processing Requirements
+                                    </button>
+                                </h2>
+                                <div id="nlp-preprocessing" class="accordion-collapse collapse" data-bs-parent="#nlp-accordion">
+                                    <div class="accordion-body">
+                                        <h6>Pre-processing:</h6>
+                                        <ul>
+                                            <li>Tokenization (splitting text into words/tokens)</li>
+                                            <li>Lowercasing</li>
+                                            <li>Stop word removal</li>
+                                            <li>Stemming/Lemmatization</li>
+                                            <li>Text cleaning (remove special characters, URLs)</li>
+                                            <li>Word embeddings (Word2Vec, GloVe, BERT)</li>
+                                        </ul>
+                                        <h6>Post-processing:</h6>
+                                        <ul>
+                                            <li>Model evaluation (accuracy, F1-score, BLEU for translation)</li>
+                                            <li>Interpretability (attention visualization, SHAP values)</li>
+                                            <li>Error analysis on misclassified examples</li>
+                                            <li>Fine-tuning on domain-specific data</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nlp-industry">
+                                        Industry Applications
+                                    </button>
+                                </h2>
+                                <div id="nlp-industry" class="accordion-collapse collapse" data-bs-parent="#nlp-accordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Customer Service:</strong> Chatbots, automated responses, ticket classification</li>
+                                            <li><strong>Social Media:</strong> Sentiment analysis, trend detection, content moderation</li>
+                                            <li><strong>Healthcare:</strong> Clinical note analysis, medical record extraction</li>
+                                            <li><strong>Finance:</strong> News sentiment analysis, automated report generation</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="visualization-container">
+                        <h4>Sentence Processing Pipeline</h4>
+                        <div id="nlp-viz" style="min-height: 400px; padding: 2rem;">
+                            <div id="nlp-pipeline" class="d-flex flex-column gap-3"></div>
+                        </div>
+                    </div>
+                    <div class="data-input-form">
+                        <h4>Enter a Sentence</h4>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" id="nlp-sentence" class="form-control" placeholder="Enter a sentence to process..." value="The quick brown fox jumps" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary w-100" onclick="processNLP()">Process & Generate Response</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Console Window -->
+    <button class="console-toggle" id="console-toggle" onclick="toggleConsole()">
+        <i class="fa fa-terminal"></i>
+    </button>
+    <div class="console-window" id="console-window">
+        <div class="console-header">
+            <h5>Processing Console</h5>
+            <button class="console-close" onclick="toggleConsole()">×</button>
+        </div>
+        <div class="console-body" id="console-body">
+            <div class="console-line info">Console ready. Select an algorithm to see processing steps.</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="ml-algorithms.js"></script>
+    <script src="visualizations.js"></script>
+    <script src="console.js"></script>
+    <script src="animations.js"></script>
+    <script src="interactivity.js"></script>
+</body>
+
+</html>

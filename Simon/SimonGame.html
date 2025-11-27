@@ -6,67 +6,20 @@
   <title>Simon - Parsa Ahmadizadeh</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="../styles/styles.css" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../styles/games.css" />
 </head>
 
 <body>
-  <div class="nav">
-    <div class="container nav justify-content-end fixed-top" width="100%">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  Projects
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a class="dropdown-item" href="../bogglesolver/boggle.html">Boggle</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="../sudoku/sudoku.html">Sudoku</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="">Simon</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="../COVID_Tracker/Covid_Tracker.html">covid-19 Dashboard</a>
+  <!-- Navbar will be loaded here dynamically -->
+  <script src="../components/navbar-loader.js"></script>
 
-                  </li>
-                </ul>
-              </li>
-
-              <li class="nav-item">
-                <a href="https://www.linkedin.com/in/parsa-ahmadizadeh-22087a321/"><i class="fa-brands fa-linkedin m-2"
-                    href="#" style="font-size: 24px"></i></a>
-              </li>
-              <li class="nav-item">
-                <a href="https://github.com/Parsa-ahm"><i class="fa-brands fa-github m-2"
-                    style="font-size: 24px"></i></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </div>
-
-  <section id="header">
-    <div class="container text-start">
+  <section class="game-header">
+    <div class="container">
       <div class="row">
         <div class="">
           <h1 class="">
             Simon Says
-            <small class="text-body-secondary"> Java Script </small>
+            <small class="text-body-secondary"> JavaScript </small>
           </h1>
           <p class="mt-3">
             In developing this game, I utilized JavaScript and various
@@ -88,16 +41,14 @@
     </div>
   </section>
 
-  <div class="container text-center">
-    <h1 id="level-title" class="m-5">Press A Key to Start</h1>
-    <div class="container">
-      <div class="grid text-center">
-        <div type="button" id="green" class="btn1 green col-3"></div>
-        <div type="button" id="red" class="btn1 red col-3"></div>
-      </div>
-      <div class="grid text-center mb-5">
-        <div type="button" id="yellow" class="btn1 yellow col-3"></div>
-        <div type="button" id="blue" class="btn1 blue col-3"></div>
+  <div class="container game-content-section">
+    <div class="simon-game-container">
+      <h1 id="level-title" class="simon-title">Press A Key to Start</h1>
+      <div class="simon-buttons-container">
+        <div type="button" id="green" class="simon-button green"></div>
+        <div type="button" id="red" class="simon-button red"></div>
+        <div type="button" id="yellow" class="simon-button yellow"></div>
+        <div type="button" id="blue" class="simon-button blue"></div>
       </div>
     </div>
   </div>

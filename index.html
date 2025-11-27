@@ -11,55 +11,8 @@
 </head>
 
 <body>
-  <!-- Navbar Section -->
-  <div class="nav">
-    <div class="container nav justify-content-end fixed-top" width="100%">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">Projects</a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a class="dropdown-item" href="bogglesolver/boggle.html">Boggle</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="sudoku/sudoku.html">Sudoku</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="Simon/SimonGame.html">Simon</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="COVID_Tracker/Covid_Tracker.html">covid-19
-                      Dashboard</a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="https://www.linkedin.com/in/parsa-ahmadizadeh-22087a321/">
-                  <i class="fa fa-linkedin m-2" style="font-size: 24px"></i>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="https://github.com/Parsa-ahm">
-                  <i class="fa fa-github m-2" style="font-size: 24px"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </div>
+  <!-- Navbar will be loaded here dynamically -->
+  <script src="components/navbar-loader.js"></script>
 
   <!-- Header Section -->
   <section id="header">
@@ -69,19 +22,22 @@
           <h1 class="">
             Parsa Ahmadizadeh
             <br />
-            <small class="text-body-secondary"> Computer Scientist </small>
+            <small class="text-body-secondary"> Software Engineer </small>
           </h1>
           <p class="mt-3">
-            I am a highly motivated and innovative professional with a solid
-            foundation in computer science and a proven track record of
-            managing complex projects, leading teams, and delivering
-            high-quality results. My experience spans across project
-            management, technology oversight, data science, and web development making me a
-            versatile and valuable candidate for software engineering, data engineering and
-            solutions engineering roles. I excel in problem-solving, continuous
-            learning and applying technical skills to real-world challenges.
-            I am eager to leverage my skills and ability to learn and adapt to contribute to a
-            forward-thinking company, driving innovation and efficiency.
+            Software engineer with experience developing all of a medical company's software that interfaces with
+            hardware.
+            I served as the sole software engineer at a medical equipment company, developing a solution for a $3M
+            contract
+            after the previous solution proved unsuccessful. I excel in software development, solutions engineering,
+            embedded
+            systems, and full-stack development. My experience spans across software engineering, project management,
+            AI/ML
+            development, and creating innovative solutions. I have a proven track record of managing complex projects
+            from
+            start to finish, structuring workflows, and adhering to Agile methodology, frequently completing projects
+            ahead
+            of schedule.
           </p>
         </div>
       </div>
@@ -95,21 +51,52 @@
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapsePioneer" aria-expanded="false" aria-controls="collapsePioneer">
+            Pioneer Engineering | Software Engineer (full-time - remote)
+          </button>
+        </h2>
+        <div id="collapsePioneer" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <small>April 2023 – Present</small> <br />
+            <p>Worked as the only software engineer at a company that manufactures a large mixer for making IV fluids.
+              Initially, salvaged a $3M project for the largest client after the prior solution did not work, finished
+              it in 1/3 of the expected time, and continued to develop software for the product.</p>
+            <ul>
+              <li>Developed software in C and assembly for the custom center for several types of IV systems.</li>
+              <li>Wrote middleware that connected the system with the CPU to automate functions. Converted binary code
+                into information users understand.</li>
+              <li>Enabled the system to achieve 99.9% uptime.</li>
+              <li>Defined software requirements and conducted the testing.</li>
+              <li>Created the company's software development process. Structured it, prioritized tasks, and established
+                coding standards. Built the business's first automation pipeline and made code modular.</li>
+              <li>Wrote the documentation for the software, including a description of what it does and how to use it.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-            LocaMax Inc. | Project Coordinator / Manager (full-time - in-person)
+            LocaMax Inc. | Project Manager (full-time - in-person)
           </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <small>February 2021 – March 2023</small> <br />
+            <p>Managed the complete renovation of a home (including foundation, plumbing, and electrical) after the
+              owner was told it would be better to rebuild it. Completed the project for $1.5M versus the $2M target by
+              streamlining workflows and leading the development of niche technologies.</p>
             <ul>
-              <li>Kept the team on time and under budget for each sprint by breaking down the project into small
-                requirements, thinking of bottlenecks ahead of time, staying organized, and working overtime when
-                needed.
+              <li>Led team to create custom tools, including a concrete saw, drywalling equipment, guardrails for custom
+                woodwork sawing, a concrete form, and wrenches for heavy lifting. Prevented the need for fibreglass by
+                using concrete to build the pool.</li>
+              <li>Managed the crew, scheduled tasks, and monitored work for quality. Taught members to build the
+                electrical and HVAC systems from scratch.</li>
+              <li>Worked as the point of contact with the owner, suggested solutions, and updated her on project status.
               </li>
-              <li>Built custom tools and revised classical methodology to reduce cost at no expense to quality. Through
-                in-depth research, I gained a deeper understanding of the industry's needs and technical requirements,
-                to solve problems quickly and efficiently, while driving innovation.</li>
             </ul>
           </div>
         </div>
@@ -125,12 +112,16 @@
         <div id="collapsefour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <small>March 2019 – December 2020</small> <br />
+            <p>Increased the number of people who contacted the company (a building materials supplier) by 50% and the
+              number of page views >6x by developing software for its website.</p>
             <ul>
-              <li>Directed the complete redesign of the company website using WordPress, HTML/CSS, and JavaScript,
-                resulting in a 50% increase in qualified lead generation and enhanced user engagement. Developed an
-                understanding of companies' industry challenges and opportunities to optimize effective custom
-                solutions.
+              <li>Maximized the site's responsiveness on mobile devices and laptops. Coded in React, HTML, CSS, and JS.
               </li>
+              <li>Added features to the site, including search and communication forms.</li>
+              <li>Updated the site as the company evolved. Added a project portfolio and product information as NueWal
+                gained the rights to represent other businesses.</li>
+              <li>Migrated the company to the cloud, including data, imaging, project calendar, and financial planning
+                spreadsheet. Managed the information and ensured that the appropriate teams could access it.</li>
             </ul>
           </div>
         </div>
@@ -164,94 +155,109 @@
 
   <h2 class="text-center m-5">Projects</h2>
   <div class="container">
-    <div class="row mb-4">
+    <div class="row mb-4 card-row">
 
       <div class="col">
-        <div class="card" style="">
+        <div class="standard-card">
+          <div class="card-body">
+            <h5 class="card-title">Arch AI</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Linux | AI | Python (in progress)</h6>
+            <p class="card-text">
+              Created a custom Arch Linux distro which has a built-in assistant. Enabled it to review loads on GPUs and
+              switch between models based on use. Features include adaptive on-device & remote compute, file
+              organization by meaning, context-aware sidebars, and privacy-first defaults.
+            </p>
+            <div class="card-buttons">
+              <span class="card-btn disabled">Demo</span>
+              <span class="card-btn disabled">Github</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="standard-card">
+          <div class="card-body">
+            <h5 class="card-title">Danus: Local AI Assistant</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Python | Flask | PyTorch</h6>
+            <p class="card-text">
+              Utilized REST APIs for file-aware QA, long-term and short-term memory, and model selection. Implemented a
+              chunking/embedding pipeline, retrieval, and action logging system.
+            </p>
+            <div class="card-buttons">
+              <span class="card-btn disabled">Demo</span>
+              <span class="card-btn disabled">Github</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="standard-card">
           <div class="card-body">
             <h5 class="card-title">Retail Sales Analytics</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Python (PySpark)</h6>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Python | PySpark | Databricks | Spark ML</h6>
             <p class="card-text">
-              Designed a medallion‑architecture workflow in Databricks to clean, transform and summarise dataset.
+              Developed a sales analytics system for one of Canada's largest data consulting companies. Built a
+              medallion architecture to ingest, clean, and aggregate sales data. Engineered features and trained a Spark
+              ML model to recommend purchases to customers.
             </p>
-            <a href="https://github.com/Parsa-ahm/retail-lakehouse" class="card-link">Github</a>
+            <div class="card-buttons">
+              <span class="card-btn disabled">Demo</span>
+              <a href="https://github.com/Parsa-ahm/retail-lakehouse" class="card-btn active">Github</a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card" style="">
-          <div class="card-body">
-            <h5 class="card-title">PSQL change manager</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Python | Docker</h6>
-            <p class="card-text">
-              A pipeline that streams real‑time change events for analytics,
-              providing audit trails for bookkeeping.
-            </p>
-            <a href="https://github.com/Parsa-ahm/Data-Capture" class="card-link">Github</a>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card" style="">
-          <div class="card-body">
-            <h5 class="card-title">Sudoku</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">JavaScript</h6>
-            <p class="card-text">
-              A backtracking algorithm to solve sudoku puzzles made using JavaScript.
-            </p>
-            <a href="sudoku/sudoku.html" class="card-link">Web Prototype</a>
-            <a href="https://github.com/Parsa-ahm/ResumeWebsite" class="card-link">Github</a>
-          </div>
-        </div>
-      </div>
-
-
 
     </div>
 
-    <div class="row">
+    <div class="row card-row">
       <div class="col">
+        <div class="standard-card">
+          <div class="card-body">
+            <h5 class="card-title">Quantum Outlier Detection</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Quantum Computing</h6>
+            <p class="card-text">
+              Enabled detection of anomalies in financial data by using quantum and virtual computers to analyze
+              investment opportunities. Explored a quadratic-speedup approach to anomaly detection. Utilized quantum
+              counting to set parameters and Grover-style search to identify outliers.
+            </p>
+            <div class="card-buttons">
+              <a href="quantum-outlier-detection/index.html" class="card-btn active">Demo</a>
+              <span class="card-btn disabled">Github</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <div class="card" style="">
+      <div class="col">
+        <div class="standard-card">
           <div class="card-body">
             <h5 class="card-title">Boggle Game Solver</h5>
             <h6 class="card-subtitle mb-2 text-body-secondary">Rust</h6>
             <p class="card-text">
-              An optimized backtracking algorithm made in Rust to solve large
-              Boggle boards.
+              Created a custom data structure and developed an algorithm to solve the game Boggle on a 20x20 board
+              quickly using optimized backtracking.
             </p>
-            <a href="bogglesolver/boggle.html" class="card-link">Web Prototype</a>
-            <a href="https://github.com/Parsa-ahm/Boggle-Solver" class="card-link">Github</a>
+            <div class="card-buttons">
+              <a href="bogglesolver/boggle.html" class="card-btn active">Demo</a>
+              <a href="https://github.com/Parsa-ahm/Boggle-Solver" class="card-btn active">Github</a>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="col">
-        <div class="card" style="">
+        <div class="standard-card">
           <div class="card-body">
-            <h5 class="card-title">Covid-19 Dashboard</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">JavaScript</h6>
+            <h5 class="card-title">E-commerce Backend</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Java</h6>
             <p class="card-text">
-              A Dashboard that visualizes live Covid-19 data from disease.sh API.
+              Built the backend of an E-commerce store with OOP principles.
             </p>
-            <a href="COVID_Tracker/Covid_Tracker.html" class="card-link">Web Prototype</a>
-            <a href="https://github.com/Parsa-ahm/ResumeWebsite" class="card-link">Github</a>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card" style="">
-          <div class="card-body">
-            <h5 class="card-title">Customer and Product Bookkeeping</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">
-              Java
-            </h6>
-            <p class="card-text">
-              OOP application that stores customer and product information.
-            </p>
-            <a href="https://github.com/Parsa-ahm/Ecommerce-system" class="card-link">Github</a>
+            <div class="card-buttons">
+              <span class="card-btn disabled">Demo</span>
+              <a href="https://github.com/Parsa-ahm/Ecommerce-system" class="card-btn active">Github</a>
+            </div>
           </div>
         </div>
       </div>
@@ -277,12 +283,12 @@
           <div class="col">
             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
               aria-valuemax="100">
-              <div class="progress-bar w-50"></div>
+              <div class="progress-bar w-75"></div>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-xl-4">Rust</div>
+          <div class="col-xl-4">Assembly</div>
           <div class="col">
             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
               aria-valuemax="100">
@@ -291,7 +297,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xl-4">Python (ML, PySpark)</div>
+          <div class="col-xl-4">Python (TensorFlow, PySpark, Scikit-learn)</div>
           <div class="col">
             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
               aria-valuemax="100">
@@ -309,7 +315,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xl-4">JavaScript (React, Ajax)</div>
+          <div class="col-xl-4">JavaScript / React</div>
           <div class="col">
             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="50" aria-valuemin="0"
               aria-valuemax="100">
@@ -318,7 +324,49 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xl-4">HTML, CSS, Bootstrap</div>
+          <div class="col-xl-4">Rust</div>
+          <div class="col">
+            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
+              aria-valuemax="100">
+              <div class="progress-bar w-50"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4">SQL</div>
+          <div class="col">
+            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
+              aria-valuemax="100">
+              <div class="progress-bar w-50"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4">Linux / Bash</div>
+          <div class="col">
+            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
+              aria-valuemax="100">
+              <div class="progress-bar w-50"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technologies & Tools Section -->
+    <div class="row p-3">
+      <div class="col-xl-2">
+        <h4>Technologies & Tools</h4>
+      </div>
+      <div class="col-xl-4">
+        <p>
+          Specialized technologies and development tools used in software engineering, embedded systems, AI/ML, and
+          system development.
+        </p>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col-xl-4">Embedded & System Software</div>
           <div class="col">
             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
               aria-valuemax="100">
@@ -327,11 +375,56 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xl-4">Bash</div>
+          <div class="col-xl-4">AI / Machine Learning</div>
           <div class="col">
             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
               aria-valuemax="100">
-              <div class="progress-bar w-25"></div>
+              <div class="progress-bar w-75"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4">Computer Architecture (x86, SoC, GPU)</div>
+          <div class="col">
+            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
+              aria-valuemax="100">
+              <div class="progress-bar w-50"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4">REST APIs</div>
+          <div class="col">
+            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
+              aria-valuemax="100">
+              <div class="progress-bar w-50"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4">CI/CD & Docker</div>
+          <div class="col">
+            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
+              aria-valuemax="100">
+              <div class="progress-bar w-50"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4">Relational Databases</div>
+          <div class="col">
+            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
+              aria-valuemax="100">
+              <div class="progress-bar w-50"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4">Concurrent Programming</div>
+          <div class="col">
+            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
+              aria-valuemax="100">
+              <div class="progress-bar w-50"></div>
             </div>
           </div>
         </div>
@@ -469,17 +562,29 @@
   <div class="container mt-5">
     <h2 class="text-center mb-4">Other</h2>
     <div class="container p-4 mt-5" style="background-color: #1d2125">
-      <h4>Dean's List</h4>
-      <small>2023/2024</small>
+      <h4>Education</h4>
+      <h5>B.Sc (Honours), Computer Science</h5>
+      <small>Toronto Metropolitan University, Toronto, ON | June 2025</small>
+      <p>
+        <strong>4.0/4.0 GPA, Dean's List</strong> - Completed 21 courses (more than two years' worth of courses) in one
+        year.
+      </p>
+      <p>
+        <strong>Relevant courses:</strong> Machine Learning, Data Science, Probabilities and Statistics, AI, Data
+        Structures,
+        Database Systems, Algorithms (in C++), Discrete Structures, Discrete Math, Calculus, Linear Algebra,
+        Quantum Software Engineering, Operating Systems (in bash and C), Computer Organization 1 & 2
+        (computer and SoC architecture, RISC, ARM & x86 instruction sets, and assembly).
+      </p>
+      <p>
+        <strong>Certifications:</strong> IBM's Basics in Quantum Information certificate (March 2025)
+      </p>
       <p>
         Achieved the
         <a
           href="https://www.torontomu.ca/science/current-undergraduate-students/deans-list/#!accordion-1718808721348-2023-2024">Dean's
           List</a>
-        Award for the 2023/2024 academic year by demonstrating outstanding
-        academic performance. Graduating with a 4.0 GPA while completing 21
-        university-level courses at Toronto Metropolitan University. While engaging in research and hands-on projects
-        that fuse theoretical knowledge with innovative real-world applications.
+        Award for the 2023/2024 academic year by demonstrating outstanding academic performance.
       </p>
     </div>
 
