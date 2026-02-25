@@ -38,7 +38,7 @@
         </div>
     </section>
 
-    <div class="container py-5">
+    <div class="container py-5 covid-loading" id="covidContent">
         <!-- Global Summary -->
         <section class="mb-5">
             <div class="text-center mb-4">
@@ -47,9 +47,14 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="standard-card">
+                    <div class="standard-card covid-loading-box">
                         <div class="card-body p-0">
-                            <div id="summary"></div>
+                            <div id="summary" class="p-4">
+                                <div class="covid-skeleton covid-skeleton-line" style="width: 90%;"></div>
+                                <div class="covid-skeleton covid-skeleton-line" style="width: 75%;"></div>
+                                <div class="covid-skeleton covid-skeleton-line" style="width: 85%;"></div>
+                                <div class="covid-skeleton covid-skeleton-line" style="width: 70%;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -64,8 +69,9 @@
                 <div class="covid-section-label">Trends</div>
                 <h2 class="covid-section-title mb-0">Daily New Cases vs. Deaths</h2>
             </div>
-            <div class="standard-card covid-chart-card">
-                <canvas id="covidChart" height="200"></canvas>
+            <div class="standard-card covid-chart-card covid-loading-box">
+                <div class="covid-skeleton covid-skeleton-chart" id="lineChartPlaceholder"></div>
+                <canvas id="covidChart" height="200" style="display: none;"></canvas>
             </div>
         </section>
 
@@ -77,8 +83,9 @@
                 <div class="covid-section-label">Geography</div>
                 <h2 class="covid-section-title mb-0">Total Cases by Country</h2>
             </div>
-            <div class="standard-card covid-chart-card">
-                <div id="regions_div" style="min-height: 400px;"></div>
+            <div class="standard-card covid-chart-card covid-loading-box">
+                <div class="covid-skeleton covid-skeleton-geo" id="geoPlaceholder"></div>
+                <div id="regions_div" style="min-height: 400px; display: none;"></div>
             </div>
         </section>
 
@@ -90,8 +97,9 @@
                 <div class="covid-section-label">Rankings</div>
                 <h2 class="covid-section-title mb-0">Top 10 Countries by Total Cases</h2>
             </div>
-            <div class="standard-card covid-chart-card">
-                <canvas id="barChart" height="200"></canvas>
+            <div class="standard-card covid-chart-card covid-loading-box">
+                <div class="covid-skeleton covid-skeleton-chart" id="barChartPlaceholder"></div>
+                <canvas id="barChart" height="200" style="display: none;"></canvas>
             </div>
         </section>
     </div>
@@ -111,8 +119,17 @@
 
         document.addEventListener('DOMContentLoaded', loadData);
 
+        function hideLoadingState() {
+            document.getElementById('covidContent').classList.remove('covid-loading');
+            document.getElementById('lineChartPlaceholder').style.display = 'none';
+            document.getElementById('covidChart').style.display = 'block';
+            document.getElementById('geoPlaceholder').style.display = 'none';
+            document.getElementById('regions_div').style.display = 'block';
+            document.getElementById('barChartPlaceholder').style.display = 'none';
+            document.getElementById('barChart').style.display = 'block';
+        }
+
         async function loadData() {
-            document.getElementById('summary').innerHTML = `<p class="text-center py-4 text-muted">Loading data…</p>`;
             if (covidLineChart) covidLineChart.destroy();
             if (topBarChart) topBarChart.destroy();
 
@@ -139,6 +156,7 @@
                 const avgCases = (totalCases / (dates.length - 1)).toFixed(2);
                 const avgDeaths = (totalDeaths / (dates.length - 1)).toFixed(2);
 
+                hideLoadingState();
                 document.getElementById('summary').innerHTML = `
                     <table class="table table-bordered mb-0 covid-summary-table">
                         <thead>
@@ -208,10 +226,14 @@
                 drawBarChart(top10.map(c => c.country), top10.map(c => c.cases));
 
             } catch (err) {
+                hideLoadingState();
                 document.getElementById('summary').innerHTML = `
                     <div class="alert alert-danger m-0 mx-3 my-3">
                         Error loading data: ${err.message}
                     </div>`;
+                document.getElementById('covidChart').style.display = 'block';
+                document.getElementById('regions_div').style.display = 'block';
+                document.getElementById('barChart').style.display = 'block';
                 console.error(err);
             }
         }

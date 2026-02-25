@@ -116,3 +116,58 @@ body.page-covid #header {
   background-image: none !important;
   margin: 2.5rem 0;
 }
+
+/* ── Loading animation ───────────────────────────────────────── */
+.covid-loading .covid-loading-box {
+  position: relative;
+  overflow: hidden;
+}
+.covid-loading .covid-loading-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: covidShimmer 1.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes covidShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.covid-loading .covid-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: covidShimmer 1.5s ease-in-out infinite;
+  border-radius: var(--r);
+}
+.covid-loading .covid-skeleton-line {
+  height: 1rem;
+  margin-bottom: 0.75rem;
+}
+.covid-loading .covid-skeleton-line:last-child {
+  margin-bottom: 0;
+}
+.covid-loading #summary .covid-skeleton-line {
+  max-width: 100%;
+}
+.covid-loading .covid-skeleton-chart {
+  min-height: 200px;
+  width: 100%;
+}
+.covid-loading .covid-skeleton-geo {
+  min-height: 400px;
+  width: 100%;
+}
