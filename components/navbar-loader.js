@@ -11,13 +11,14 @@
     
     // Count depth (how many directories deep we are)
     let depth = 0;
-    if (path.includes('quantum-outlier-detection') || 
-        path.includes('bogglesolver') || 
-        path.includes('sudoku') || 
-        path.includes('Simon') || 
+    if (path.includes('quantum-outlier-detection') ||
+        path.includes('bogglesolver') ||
+        path.includes('sudoku') ||
+        path.includes('Simon') ||
         path.includes('COVID_Tracker') ||
         path.includes('ml-visualizer') ||
-        path.includes('games')) {
+        path.includes('games') ||
+        path.includes('resources')) {
       depth = 1;
     }
     
@@ -34,6 +35,7 @@
     if (path.includes('covid')) return 'covid';
     if (path.includes('ml-visualizer') || path.includes('ml') && path.includes('visualizer')) return 'ml-visualizer';
     if (path.includes('games')) return 'games';
+    if (path.includes('resources')) return 'resources';
     return 'home';
   }
 
@@ -71,6 +73,9 @@
                 <a class="dropdown-item" id="nav-games" href="">Games</a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="nav-resources" href="">Resources</a>
           </li>
           <li class="nav-item">
             <a href="https://www.linkedin.com/in/parsa-ahmadizadeh-22087a321/" class="nav-link">
@@ -124,6 +129,16 @@
       }
     }
     
+    // Set Resources link
+    const resourcesLink = document.getElementById('nav-resources');
+    if (resourcesLink) {
+      resourcesLink.href = basePath + 'resources/index.html';
+      if (currentPage === 'resources') {
+        resourcesLink.classList.add('active');
+        resourcesLink.setAttribute('aria-current', 'page');
+      }
+    }
+
     // Set Project links
     const projectLinks = {
       'nav-quantum': 'quantum-outlier-detection/index.html',
