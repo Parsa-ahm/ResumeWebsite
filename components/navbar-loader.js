@@ -44,13 +44,13 @@
     return `
 <div class="nav fixed-top w-100">
   <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+    <div class="container-fluid" style="justify-content:flex-end;">
+      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ms-auto">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown" style="flex-grow:0;flex-basis:auto;">
+        <ul class="navbar-nav" style="flex-direction:row;display:flex;align-items:center;gap:0.4rem;margin:0;padding:0;list-style:none;flex-wrap:wrap;">
           <li class="nav-item">
             <a class="nav-link" id="nav-home" aria-current="page" href="">Home</a>
           </li>
@@ -59,7 +59,7 @@
               aria-expanded="false">
               Projects
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu dropdown-menu-end">
               <li>
                 <a class="dropdown-item" id="nav-quantum" href="">Quantum Outlier Detection</a>
               </li>
@@ -80,17 +80,14 @@
           <li class="nav-item">
             <a class="nav-link" id="nav-resources" href="">Resources</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item nav-divider d-lg-none" aria-hidden="true"></li>
+          <li class="nav-item nav-social-row">
             <a href="https://www.linkedin.com/in/parsa-ahmadizadeh-22087a321/" class="nav-link">
               <i class="fa fa-linkedin" style="font-size: 20px"></i>
             </a>
-          </li>
-          <li class="nav-item">
             <a href="https://github.com/Parsa-ahm" class="nav-link">
               <i class="fa fa-github" style="font-size: 20px"></i>
             </a>
-          </li>
-          <li class="nav-item">
             <a id="nav-resume" href="" target="_blank" class="nav-link">
               <i class="fa fa-file-text-o" style="font-size: 20px" title="View Resume"></i>
             </a>
@@ -113,9 +110,35 @@
     
     // Insert navbar at the beginning of body
     document.body.insertBefore(navbarContainer.firstElementChild, document.body.firstChild);
+
+    // Add page-specific class for color tinting
+    document.body.classList.add('page-' + getCurrentPage());
+
+    // Load scroll animations
+    const scrollScript = document.createElement('script');
+    scrollScript.src = basePath + 'components/scroll-animations.js';
+    scrollScript.async = true;
+    document.body.appendChild(scrollScript);
     
     // Set paths and active states
     setupNavbar(basePath);
+
+    // Mobile: close modal when clicking backdrop, lock body scroll when open
+    const collapseEl = document.getElementById('navbarNavDropdown');
+    const toggler = document.querySelector('.navbar-toggler');
+    if (collapseEl && toggler && collapseEl.classList.contains('navbar-collapse')) {
+      collapseEl.addEventListener('click', function(e) {
+        if (e.target === collapseEl && collapseEl.classList.contains('show')) {
+          toggler.click();
+        }
+      });
+      collapseEl.addEventListener('show.bs.collapse', function() {
+        if (window.innerWidth < 992) document.body.style.overflow = 'hidden';
+      });
+      collapseEl.addEventListener('hide.bs.collapse', function() {
+        document.body.style.overflow = '';
+      });
+    }
   }
 
   // Setup navbar paths and active states

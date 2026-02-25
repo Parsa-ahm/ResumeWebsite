@@ -7,73 +7,11 @@
     <title>Quantum Outlier Detection - Parsa Ahmadizadeh</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles/styles.css" />
-    <style>
-        .tech-badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            margin: 0.25rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        .section-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            margin: 4rem 0;
-        }
-
-        .methodology-step {
-            margin-bottom: 0;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 1.5rem;
-            background-color: #1d2125;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.75rem;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-1px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-
-        .result-highlight {
-            background-color: #1d2125;
-            border-left: 4px solid rgba(255, 255, 255, 0.3);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            margin: 1rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-left-width: 4px;
-        }
-
-        .card-row .col {
-            display: flex;
-        }
-
-        .card-row .col>* {
-            width: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="quantum.css" />
 </head>
 
 <body>
@@ -84,16 +22,16 @@
     <section id="header">
         <div class="container">
             <div class="row">
-                <div class="">
-                    <h1 class="">
-                        Stock Market Outlier Detection <br />
-                        <small class="text-body-secondary"> Quantum Computing </small>
-                    </h1>
-                    <p class="mt-3">
+                <div class="col-lg-9">
+                    <div class="qd-label">
+                        <span class="qd-label-dot"></span>
+                        Quantum Computing Research
+                    </div>
+                    <h1 class="qd-title">Stock Market Outlier Detection</h1>
+                    <p class="qd-desc">
                         A hybrid quantum-classical framework leveraging Grover's algorithm for financial anomaly
-                        detection with quadratic speedup over classical methods. This research investigates detecting
-                        anomalies and outliers in financial markets using quantum computing techniques integrated with
-                        classical preprocessing.
+                        detection with quadratic speedup over classical methods. Integrating quantum computing
+                        with classical preprocessing to identify statistical outliers across financial markets.
                     </p>
                 </div>
             </div>
@@ -110,23 +48,17 @@
                             <h2 class="h3 mb-4">Overview</h2>
                             <p class="lead mb-4">
                                 This research investigates a hybrid quantum-classical framework for detecting anomalies
-                                and outliers
-                                in financial markets. Traditional financial anomaly detection methods often suffer from
-                                high computational
-                                costs when scanning large datasets. By leveraging <strong>Grover's algorithm</strong>,
-                                which provides a
-                                quadratic speedup for unsorted search problems, this study integrates classical
-                                preprocessing with quantum
-                                data encoding to detect statistical outliers in key financial metrics.
+                                and outliers in financial markets. Traditional financial anomaly detection methods often
+                                suffer from high computational costs when scanning large datasets. By leveraging
+                                <strong>Grover's algorithm</strong>, which provides a quadratic speedup for unsorted
+                                search problems, this study integrates classical preprocessing with quantum data encoding
+                                to detect statistical outliers in key financial metrics.
                             </p>
                             <p>
-                                Historical data from <strong>twenty technology stocks</strong> from the S&P500 were
-                                analyzed using three
-                                financial metrics: trailing P/E ratio, return on equity (ROE), and dividend yield. The
-                                hybrid approach
-                                combines classical z-score analysis with quantum search techniques to identify anomalies
-                                more efficiently
-                                than traditional methods.
+                                Historical data from <strong>twenty technology stocks</strong> from the S&amp;P500 were
+                                analyzed using three financial metrics: trailing P/E ratio, return on equity (ROE), and
+                                dividend yield. The hybrid approach combines classical z-score analysis with quantum
+                                search techniques to identify anomalies more efficiently than traditional methods.
                             </p>
                         </div>
                     </div>
@@ -138,13 +70,16 @@
     <!-- Key Features -->
     <section class="py-5">
         <div class="container">
-            <h2 class="text-center mb-5">Key Features</h2>
+            <div class="text-center mb-5">
+                <div class="section-label-tag" style="text-align:center;">Capabilities</div>
+                <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:700;letter-spacing:-0.025em;color:var(--text);margin-bottom:0;">Key Features</h2>
+            </div>
             <div class="row g-4 card-row">
                 <div class="col-md-4">
                     <div class="standard-card">
                         <div class="card-body">
                             <div class="mb-3">
-                                <i class="fa fa-rocket fa-3x"></i>
+                                <div class="feature-icon"><i class="fa fa-rocket"></i></div>
                             </div>
                             <h4 class="h5 mb-3">Quadratic Speedup</h4>
                             <p class="card-text">
@@ -158,7 +93,7 @@
                     <div class="standard-card">
                         <div class="card-body">
                             <div class="mb-3">
-                                <i class="fa fa-cogs fa-3x"></i>
+                                <div class="feature-icon"><i class="fa fa-cogs"></i></div>
                             </div>
                             <h4 class="h5 mb-3">Hybrid Approach</h4>
                             <p class="card-text">
@@ -172,13 +107,12 @@
                     <div class="standard-card">
                         <div class="card-body">
                             <div class="mb-3">
-                                <i class="fa fa-line-chart fa-3x"></i>
+                                <div class="feature-icon"><i class="fa fa-line-chart"></i></div>
                             </div>
                             <h4 class="h5 mb-3">Financial Analytics</h4>
                             <p class="card-text">
                                 Analyzes multiple financial metrics simultaneously including P/E ratios, ROE, and
-                                dividend
-                                yields across 20 technology stocks.
+                                dividend yields across 20 technology stocks.
                             </p>
                         </div>
                     </div>
@@ -194,95 +128,85 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 mx-auto">
-                    <h2 class="text-center mb-5">Methodology</h2>
+                    <div class="text-center mb-5">
+                        <div class="section-label-tag" style="text-align:center;">Research Process</div>
+                        <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:700;letter-spacing:-0.025em;color:var(--text);margin-bottom:0;">Methodology</h2>
+                    </div>
                     <div>
                         <div class="standard-card mb-4">
                             <div class="card-body">
-                                <div class="methodology-step">
-                                    <h4 class="h5 mb-3">Data Acquisition & Preprocessing</h4>
-                                    <p>
-                                        Collected historical data from 20 top-performing technology stocks in the S&P500
-                                        (AAPL, MSFT, GOOG,
-                                        AMZN, IBM, ORCL, INTC, NVDA, ADBE, CSCO, CRM, TXN, QCOM, HPQ, DELL, ACN, AMD,
-                                        AVGO, SAP, ADP)
-                                        using the Python <code>yfinance</code> library. Extracted three key financial
-                                        metrics: trailing P/E
-                                        ratio, return on equity (ROE), and dividend yield.
-                                    </p>
-                                    <p>
-                                        Applied classical preprocessing by computing z-scores for each metric. Stocks
-                                        exceeding a threshold
-                                        of 2 standard deviations were flagged as outliers, generating binary indicators
-                                        for quantum encoding.
-                                    </p>
+                                <div class="method-step-header">
+                                    <span class="method-step-number">01</span>
+                                    <h4 class="method-step-title">Data Acquisition &amp; Preprocessing</h4>
                                 </div>
+                                <p>
+                                    Collected historical data from 20 top-performing technology stocks in the S&amp;P500
+                                    (AAPL, MSFT, GOOG, AMZN, IBM, ORCL, INTC, NVDA, ADBE, CSCO, CRM, TXN, QCOM, HPQ,
+                                    DELL, ACN, AMD, AVGO, SAP, ADP) using the Python <code>yfinance</code> library.
+                                    Extracted three key financial metrics: trailing P/E ratio, return on equity (ROE),
+                                    and dividend yield.
+                                </p>
+                                <p>
+                                    Applied classical preprocessing by computing z-scores for each metric. Stocks
+                                    exceeding a threshold of 2 standard deviations were flagged as outliers, generating
+                                    binary indicators for quantum encoding.
+                                </p>
                             </div>
                         </div>
 
                         <div class="standard-card mb-4">
                             <div class="card-body">
-                                <div class="methodology-step">
-                                    <h4 class="h5 mb-3">Quantum Data Encoding & Oracle Design</h4>
-                                    <p>
-                                        Mapped binary indicators to computational basis states using <strong>five
-                                            qubits</strong> (sufficient
-                                        to represent up to 32 stocks). Constructed three separate quantum oracles using
-                                        Qiskit's Diagonal gate,
-                                        which applies phase flips (-1) to amplitudes of states corresponding to
-                                        outliers.
-                                    </p>
-                                    <p>
-                                        Explored two encoding approaches:
-                                    </p>
-                                    <ul>
-                                        <li><strong>Binary encoding:</strong> Classical preprocessing mapped to quantum
-                                            states</li>
-                                        <li><strong>Amplitude encoding:</strong> Direct encoding of z-score values into
-                                            quantum amplitudes,
-                                            enabling dynamic threshold discovery within the quantum system</li>
-                                    </ul>
+                                <div class="method-step-header">
+                                    <span class="method-step-number">02</span>
+                                    <h4 class="method-step-title">Quantum Data Encoding &amp; Oracle Design</h4>
                                 </div>
+                                <p>
+                                    Mapped binary indicators to computational basis states using <strong>five
+                                    qubits</strong> (sufficient to represent up to 32 stocks). Constructed three
+                                    separate quantum oracles using Qiskit's Diagonal gate, which applies phase flips
+                                    (-1) to amplitudes of states corresponding to outliers.
+                                </p>
+                                <p>Explored two encoding approaches:</p>
+                                <ul>
+                                    <li><strong>Binary encoding:</strong> Classical preprocessing mapped to quantum states</li>
+                                    <li><strong>Amplitude encoding:</strong> Direct encoding of z-score values into
+                                        quantum amplitudes, enabling dynamic threshold discovery within the quantum system</li>
+                                </ul>
                             </div>
                         </div>
 
                         <div class="standard-card mb-4">
                             <div class="card-body">
-                                <div class="methodology-step">
-                                    <h4 class="h5 mb-3">Quantum Circuit Construction</h4>
-                                    <p>
-                                        Built Grover's algorithm circuits for each metric:
-                                    </p>
-                                    <ol>
-                                        <li><strong>Initialization:</strong> Applied Hadamard gates to all 5 qubits</li>
-                                        <li><strong>Oracle Application:</strong> Used custom Diagonal gate to mark
-                                            outlier states</li>
-                                        <li><strong>Quantum Counting:</strong> Integrated quantum counting to estimate
-                                            number of marked states</li>
-                                        <li><strong>Diffusion Operator:</strong> Applied Grover diffusion operator to
-                                            amplify marked states</li>
-                                    </ol>
+                                <div class="method-step-header">
+                                    <span class="method-step-number">03</span>
+                                    <h4 class="method-step-title">Quantum Circuit Construction</h4>
                                 </div>
+                                <p>Built Grover's algorithm circuits for each metric:</p>
+                                <ol>
+                                    <li><strong>Initialization:</strong> Applied Hadamard gates to all 5 qubits</li>
+                                    <li><strong>Oracle Application:</strong> Used custom Diagonal gate to mark outlier states</li>
+                                    <li><strong>Quantum Counting:</strong> Integrated quantum counting to estimate number of marked states</li>
+                                    <li><strong>Diffusion Operator:</strong> Applied Grover diffusion operator to amplify marked states</li>
+                                </ol>
                             </div>
                         </div>
 
                         <div class="standard-card mb-4">
                             <div class="card-body">
-                                <div class="methodology-step">
-                                    <h4 class="h5 mb-3">Simulation & Testing</h4>
-                                    <p>
-                                        Simulated circuits using Qiskit's AerSimulator with realistic NISQ noise models
-                                        derived from IBM
-                                        quantum hardware. Noise models accounted for gate errors, readout errors,
-                                        decoherence (T1 and T2 times),
-                                        and crosstalk between qubits.
-                                    </p>
-                                    <p>
-                                        Post-simulation, measurement outcomes were analyzed to identify high-probability
-                                        states corresponding
-                                        to outlier stocks. Combined results from all three circuits into a composite
-                                        anomaly score per stock.
-                                    </p>
+                                <div class="method-step-header">
+                                    <span class="method-step-number">04</span>
+                                    <h4 class="method-step-title">Simulation &amp; Testing</h4>
                                 </div>
+                                <p>
+                                    Simulated circuits using Qiskit's AerSimulator with realistic NISQ noise models
+                                    derived from IBM quantum hardware. Noise models accounted for gate errors, readout
+                                    errors, decoherence (T1 and T2 times), and crosstalk between qubits.
+                                </p>
+                                <p>
+                                    Post-simulation, measurement outcomes were analyzed to identify high-probability
+                                    states corresponding to outlier stocks. Combined results from all three circuits
+                                    into a composite anomaly score per stock.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -296,7 +220,10 @@
     <!-- Results -->
     <section class="py-5">
         <div class="container">
-            <h2 class="text-center mb-5">Results & Findings</h2>
+            <div class="text-center mb-5">
+                <div class="section-label-tag" style="text-align:center;">Performance Metrics</div>
+                <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:700;letter-spacing:-0.025em;color:var(--text);margin-bottom:0;">Results &amp; Findings</h2>
+            </div>
             <div class="row g-4 mb-5 card-row">
                 <div class="col-md-4">
                     <div class="stat-card">
@@ -320,63 +247,51 @@
 
             <div class="row">
                 <div class="col-lg-10 mx-auto">
-                    <div class="standard-card mb-4">
+                    <div class="standard-card">
                         <div class="card-body">
                             <h4 class="h5 mb-4">Key Results</h4>
 
-                            <div class="result-highlight mb-4">
-                                <h5 class="h6 mb-3"><i class="fa fa-check-circle me-2"></i>Successful Anomaly Detection
-                                </h5>
+                            <div class="result-highlight">
+                                <h5 class="h6 mb-2"><i class="fa fa-check-circle me-2"></i>Successful Anomaly Detection</h5>
                                 <p class="mb-0">
                                     The Grover circuits successfully identified outlier states with significantly higher
-                                    probability
-                                    amplitudes. For example, stocks like AMD, AVGO, and SAP showed anomalously high P/E
-                                    ratios,
-                                    while traditional dividend payers like HPQ were highlighted for dividend yield
-                                    deviations.
-                                </p>
-                            </div>
-
-                            <div class="result-highlight mb-4">
-                                <h5 class="h6 mb-3"><i class="fa fa-chart-line me-2"></i>Quadratic Speedup Potential
-                                </h5>
-                                <p class="mb-0">
-                                    While simulations ran on quantum simulators, the theoretical quadratic speedup of
-                                    Grover's algorithm
-                                    would provide significant advantages at larger scales. The algorithm completed
-                                    searches with 1-2
-                                    iterations based on quantum counting estimates.
-                                </p>
-                            </div>
-
-                            <div class="result-highlight mb-4">
-                                <h5 class="h6 mb-3"><i class="fa fa-cogs me-2"></i>NISQ Device Considerations</h5>
-                                <p class="mb-0">
-                                    Experiments with realistic noise models revealed the trade-offs between circuit
-                                    complexity and
-                                    noise tolerance. While quantum counting accurately estimated thresholds, confidence
-                                    decreased with
-                                    noise, highlighting the importance of error mitigation techniques for practical
-                                    applications.
+                                    probability amplitudes. Stocks like AMD, AVGO, and SAP showed anomalously high P/E
+                                    ratios, while traditional dividend payers like HPQ were highlighted for dividend
+                                    yield deviations.
                                 </p>
                             </div>
 
                             <div class="result-highlight">
-                                <h5 class="h6 mb-3"><i class="fa fa-balance-scale me-2"></i>Classical Benchmark
-                                    Comparison</h5>
+                                <h5 class="h6 mb-2"><i class="fa fa-line-chart me-2"></i>Quadratic Speedup Potential</h5>
+                                <p class="mb-0">
+                                    While simulations ran on quantum simulators, the theoretical quadratic speedup of
+                                    Grover's algorithm would provide significant advantages at larger scales. The
+                                    algorithm completed searches with 1–2 iterations based on quantum counting estimates.
+                                </p>
+                            </div>
+
+                            <div class="result-highlight">
+                                <h5 class="h6 mb-2"><i class="fa fa-cogs me-2"></i>NISQ Device Considerations</h5>
+                                <p class="mb-0">
+                                    Experiments with realistic noise models revealed the trade-offs between circuit
+                                    complexity and noise tolerance. While quantum counting accurately estimated thresholds,
+                                    confidence decreased with noise, highlighting the importance of error mitigation
+                                    techniques for practical applications.
+                                </p>
+                            </div>
+
+                            <div class="result-highlight">
+                                <h5 class="h6 mb-2"><i class="fa fa-balance-scale me-2"></i>Classical Benchmark Comparison</h5>
                                 <p class="mb-0">
                                     The hybrid quantum-classical approach flagged the same set of outliers as pure
-                                    classical z-score
-                                    analysis, validating the correctness of the quantum implementation while
-                                    demonstrating the potential
-                                    for scalability advantages at larger data volumes.
+                                    classical z-score analysis, validating the correctness of the quantum implementation
+                                    while demonstrating the potential for scalability advantages at larger data volumes.
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
 
@@ -385,12 +300,15 @@
     <!-- Technologies -->
     <section class="py-5">
         <div class="container">
-            <h2 class="text-center mb-5">Technologies & Tools</h2>
+            <div class="text-center mb-5">
+                <div class="section-label-tag" style="text-align:center;">Stack</div>
+                <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:700;letter-spacing:-0.025em;color:var(--text);margin-bottom:0;">Technologies &amp; Tools</h2>
+            </div>
             <div class="row">
                 <div class="col-lg-8 mx-auto">
                     <div class="standard-card">
                         <div class="card-body">
-                            <div class="d-flex flex-wrap justify-content-center gap-3">
+                            <div class="d-flex flex-wrap justify-content-center gap-2">
                                 <span class="tech-badge">Python</span>
                                 <span class="tech-badge">Qiskit</span>
                                 <span class="tech-badge">Grover's Algorithm</span>
@@ -409,6 +327,46 @@
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
+    <!-- Documents -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <div class="section-label-tag" style="text-align:center;">Research</div>
+                <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:700;letter-spacing:-0.025em;color:var(--text);margin-bottom:0;">Documents</h2>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-5">
+                    <a href="../assets/Quantum_Financial_Anomaly_Detection_Presentation.pdf" class="standard-card doc-link-card text-decoration-none d-block" target="_blank">
+                        <div class="card-body d-flex align-items-center gap-3">
+                            <div class="feature-icon"><i class="fa fa-desktop"></i></div>
+                            <div>
+                                <h4 class="h5 mb-1" style="color: var(--text);">Presentation</h4>
+                                <p class="mb-0" style="color: var(--text-muted); font-size: 0.9rem;">Slides from the research presentation</p>
+                            </div>
+                            <i class="fa fa-external-link ms-auto" style="color: var(--accent-light);"></i>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-5">
+                    <a href="../assets/Financial_Anomaly_Detection_with_Quantum_computers.pdf" class="standard-card doc-link-card text-decoration-none d-block" target="_blank">
+                        <div class="card-body d-flex align-items-center gap-3">
+                            <div class="feature-icon"><i class="fa fa-file-text-o"></i></div>
+                            <div>
+                                <h4 class="h5 mb-1" style="color: var(--text);">Research Paper</h4>
+                                <p class="mb-0" style="color: var(--text-muted); font-size: 0.9rem;">Full paper on quantum financial anomaly detection</p>
+                            </div>
+                            <i class="fa fa-external-link ms-auto" style="color: var(--accent-light);"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
     <!-- Future Work -->
     <section class="py-5">
         <div class="container">
@@ -419,8 +377,7 @@
                             <h3 class="mb-4">Future Work</h3>
                             <p>
                                 This research demonstrates the feasibility of quantum-classical hybrid approaches for
-                                financial anomaly
-                                detection. Future improvements include:
+                                financial anomaly detection. Future improvements include:
                             </p>
                             <ul>
                                 <li>Refining oracle design for improved efficiency</li>
@@ -436,33 +393,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="text-center text-lg-start mt-5 p-5" style="background-color: #1d2125">
-        <div class="container p-4">
-            <div class="row">
-                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Research Project</h5>
-                    <p>
-                        A hybrid quantum-classical framework for financial anomaly detection using Grover's algorithm.
-                        This research explores the intersection of quantum computing and financial analytics.
-                    </p>
-                </div>
-                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Contact</h5>
-                    <p>
-                        For questions or collaboration opportunities, please reach out via
-                        <a href="https://www.linkedin.com/in/parsa-ahmadizadeh-22087a321/">LinkedIn</a> or
-                        <a href="https://github.com/Parsa-ahm">GitHub</a>.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="text-center p-3" style="background-color: #1d2125">
-            © 2024
-            <a class="text-body" href="https://parsaa.me/">Parsa Ahmadizadeh</a>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

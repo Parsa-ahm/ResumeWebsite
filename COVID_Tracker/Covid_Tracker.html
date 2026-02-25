@@ -4,40 +4,34 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>COVID‑19 Dashboard</title>
-
-    <!-- Bootstrap CSS -->
+    <title>COVID‑19 Dashboard - Parsa Ahmadizadeh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Chart.js for line & bar charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Google Charts for GeoChart -->
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <link rel="stylesheet" href="../styles/styles.css" />
-
-
+    <link rel="stylesheet" href="../styles/covid-page.css" />
 </head>
-<!-- Bootstrap JS bundle (includes Popper) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-</body>
 
 <body>
-    <!-- Navbar will be loaded here dynamically -->
     <script src="../components/navbar-loader.js"></script>
 
+    <!-- Header Section -->
     <section id="header">
-        <div class="container text-start">
+        <div class="container">
             <div class="row">
-                <div class="">
-                    <h1 class="">
-                        Covid-19 Dashboard
-                        <small class="text-body-secondary"> Java Script </small>
-                    </h1>
-                    <p class="mt-3">
-                        This is a Dashboard that tracks Covid-19 data from the disease.sh API. This is can be used to
-                        stay up to date with the virus and tells the story of what is happening in the world. (The API
-                        seems to have stopped updating in September 2023).
+                <div class="col-lg-9">
+                    <div class="covid-label">
+                        <span class="covid-label-dot"></span>
+                        Data Visualization
+                    </div>
+                    <h1 class="covid-title">COVID‑19 Dashboard</h1>
+                    <p class="covid-desc">
+                        A dashboard that tracks COVID-19 data from the disease.sh API. Stay up to date with the virus
+                        and explore what's happening around the world. (The API stopped updating in September 2023.)
                     </p>
                 </div>
             </div>
@@ -45,78 +39,84 @@
     </section>
 
     <div class="container py-5">
-
-        <!-- Global summary -->
-        <div id="summary" class="mb-5"></div>
-        <!-- Global trend line chart -->
-        <canvas id="covidChart" height="200"></canvas>
-
-        <!-- Per-country GeoChart -->
-        <div class="container justify-content-center">
-            <h3 class="mt-5 text-align-center">Total Cases by Country</h3>
-            <div id="regions_div"></div>
-        </div>
-
-
-        <!-- Top 10 countries bar chart -->
-        <h3 class="mt-5">Top 10 Countries by Total Cases</h3>
-        <canvas id="barChart" height="200"></canvas>
-    </div>
-
-
-    <footer class="text-center text-lg-start mt-5 p-5" style="background-color: #1d2125">
-        <div class="container p-4">
-            <div class="row">
-                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Thank you For your time.</h5>
-                    <p>
-                        Thank you for visiting my website. I hope you enjoyed the content
-                        and found some things interesting. I am always looking for
-                        opportunities to learn and improve so if you have any feedback or
-                        opportunities that you think I would be a good match for please do
-                        not hesitate to <a href="https://www.linkedin.com/in/parsa-ahmadizadeh/">contact me</a>.
-                    </p>
-                </div>
-                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">I am available.</h5>
-                    <p>
-                        I am currently available and looking for opportunities in all
-                        fields such as SWE, SE, consulting, research etc., if you are
-                        looking for an eager teammate or employee please do not hesitate
-                        to <a href="https://www.linkedin.com/in/parsa-ahmadizadeh/">contact me</a>. I look forward to
-                        hearing from you.
-                    </p>
+        <!-- Global Summary -->
+        <section class="mb-5">
+            <div class="text-center mb-4">
+                <div class="covid-section-label">Overview</div>
+                <h2 class="covid-section-title mb-0">Global Summary</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="standard-card">
+                        <div class="card-body p-0">
+                            <div id="summary"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="text-center p-3" style="background-color: #1d2125">
-            © 2024
-            <a class="text-body" href="https://parsaa.me/">Parsa Ahmadizadeh</a>
-        </div>
-    </footer>
+        </section>
 
-    <!-- Bootstrap JS bundle -->
+        <div class="section-divider"></div>
+
+        <!-- Global Trend Chart -->
+        <section class="mb-5">
+            <div class="text-center mb-4">
+                <div class="covid-section-label">Trends</div>
+                <h2 class="covid-section-title mb-0">Daily New Cases vs. Deaths</h2>
+            </div>
+            <div class="standard-card covid-chart-card">
+                <canvas id="covidChart" height="200"></canvas>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Per-country GeoChart -->
+        <section class="mb-5">
+            <div class="text-center mb-4">
+                <div class="covid-section-label">Geography</div>
+                <h2 class="covid-section-title mb-0">Total Cases by Country</h2>
+            </div>
+            <div class="standard-card covid-chart-card">
+                <div id="regions_div" style="min-height: 400px;"></div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Top 10 Countries -->
+        <section>
+            <div class="text-center mb-4">
+                <div class="covid-section-label">Rankings</div>
+                <h2 class="covid-section-title mb-0">Top 10 Countries by Total Cases</h2>
+            </div>
+            <div class="standard-card covid-chart-card">
+                <canvas id="barChart" height="200"></canvas>
+            </div>
+        </section>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
     <script>
-        // Load Google Charts packages
         google.charts.load('current', { packages: ['geochart'] });
 
         let covidLineChart, topBarChart, geoChart;
 
-        // as soon as the DOM is parsed, fetch the data
+        function getAccentRgba(alpha) {
+            const rgb = getComputedStyle(document.body).getPropertyValue('--accent-rgb').trim() || '236, 66, 66';
+            return `rgba(${rgb}, ${alpha})`;
+        }
+
         document.addEventListener('DOMContentLoaded', loadData);
 
-
         async function loadData() {
-            document.getElementById('summary').innerHTML = `<p class="text-center">Loading data…</p>`;
-            // clear old charts
+            document.getElementById('summary').innerHTML = `<p class="text-center py-4 text-muted">Loading data…</p>`;
             if (covidLineChart) covidLineChart.destroy();
             if (topBarChart) topBarChart.destroy();
 
             try {
-                // 1) Global historical data
                 const histRes = await fetch('https://disease.sh/v3/covid-19/historical/all');
                 const hist = await histRes.json();
                 const dates = Object.keys(hist.cases);
@@ -131,28 +131,28 @@
                         dailyCases.push(c - prevC);
                         dailyDeaths.push(d - prevD);
                     }
-                    prevC = c; prevD = d;
+                    prevC = c;
+                    prevD = d;
                 });
                 const totalCases = dailyCases.slice(1).reduce((a, b) => a + b, 0);
                 const totalDeaths = dailyDeaths.slice(1).reduce((a, b) => a + b, 0);
                 const avgCases = (totalCases / (dates.length - 1)).toFixed(2);
                 const avgDeaths = (totalDeaths / (dates.length - 1)).toFixed(2);
 
-                // Render summary table
                 document.getElementById('summary').innerHTML = `
-                    <table class="table table-bordered mx-auto w-75 text-light">
+                    <table class="table table-bordered mb-0 covid-summary-table">
                         <thead>
-                        <tr><th>Metric</th><th>Value</th></tr>
+                            <tr><th>Metric</th><th>Value</th></tr>
                         </thead>
                         <tbody>
-                        <tr><td>Total New Cases</td><td>${totalCases}</td></tr>
-                        <tr><td>Total New Deaths</td><td>${totalDeaths}</td></tr>
-                        <tr><td>Avg Daily Cases</td><td>${avgCases}</td></tr>
-                        <tr><td>Avg Daily Deaths</td><td>${avgDeaths}</td></tr>
+                            <tr><td>Total New Cases</td><td>${totalCases.toLocaleString()}</td></tr>
+                            <tr><td>Total New Deaths</td><td>${totalDeaths.toLocaleString()}</td></tr>
+                            <tr><td>Avg Daily Cases</td><td>${avgCases}</td></tr>
+                            <tr><td>Avg Daily Deaths</td><td>${avgDeaths}</td></tr>
                         </tbody>
                     </table>`;
 
-                // Draw line chart
+                const accent = getAccentRgba;
                 const ctxLine = document.getElementById('covidChart').getContext('2d');
                 covidLineChart = new Chart(ctxLine, {
                     type: 'line',
@@ -162,16 +162,16 @@
                             {
                                 label: 'Daily New Cases',
                                 data: dailyCases,
-                                borderColor: 'rgb(54,162,235)',
-                                backgroundColor: 'rgba(54,162,235,0.2)',
+                                borderColor: accent(1),
+                                backgroundColor: accent(0.25),
                                 fill: true,
                                 tension: 0.3
                             },
                             {
                                 label: 'Daily New Deaths',
                                 data: dailyDeaths,
-                                borderColor: 'rgb(255,99,132)',
-                                backgroundColor: 'rgba(255,99,132,0.2)',
+                                borderColor: 'rgba(255, 99, 132, 0.9)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
                                 fill: true,
                                 tension: 0.3
                             }
@@ -179,44 +179,39 @@
                     },
                     options: {
                         responsive: true,
-                        scales: { y: { beginAtZero: true } },
+                        scales: {
+                            x: { ticks: { color: 'rgba(226,226,236,0.6)' } },
+                            y: { beginAtZero: true, ticks: { color: 'rgba(226,226,236,0.6)' } }
+                        },
                         plugins: {
-                            title: {
-                                display: true,
-                                text: 'Global Daily New Cases vs. Deaths'
-                            },
+                            title: { display: false },
                             tooltip: { mode: 'index', intersect: false },
-                            legend: { position: 'bottom' }
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: 'rgba(226,226,236,0.8)' }
+                            }
                         },
                         interaction: { mode: 'index', intersect: false }
                     }
                 });
 
-                // 2) Fetch per-country totals
                 const countryRes = await fetch('https://disease.sh/v3/covid-19/countries');
                 const countries = await countryRes.json();
-                // Prepare data for GeoChart: [ ['Country','Cases'], ... ]
                 const geoData = [['Country', 'Total Cases']];
                 countries.forEach(c => {
-                    // use ISO2 if available, otherwise country name
                     const loc = c.countryInfo.iso2 || c.country;
                     geoData.push([loc, c.cases]);
                 });
                 drawGeoChart(geoData);
 
-                // 3) Top 10 countries by cases
-                const top10 = countries
-                    .sort((a, b) => b.cases - a.cases)
-                    .slice(0, 10);
-                const barLabels = top10.map(c => c.country);
-                const barData = top10.map(c => c.cases);
-                drawBarChart(barLabels, barData);
+                const top10 = countries.sort((a, b) => b.cases - a.cases).slice(0, 10);
+                drawBarChart(top10.map(c => c.country), top10.map(c => c.cases));
 
             } catch (err) {
                 document.getElementById('summary').innerHTML = `
-          <div class="alert alert-danger text-center">
-            Error loading data: ${err.message}
-          </div>`;
+                    <div class="alert alert-danger m-0 mx-3 my-3">
+                        Error loading data: ${err.message}
+                    </div>`;
                 console.error(err);
             }
         }
@@ -224,18 +219,17 @@
         function drawGeoChart(dataArray) {
             const dataTable = google.visualization.arrayToDataTable(dataArray);
             const options = {
-                colorAxis: { colors: ['#BAFFC9', '#FFD6A5', '#FF746C'] },
+                colorAxis: { colors: ['#1a1a2e', '#e63946', '#ff6b6b'] },
                 backgroundColor: { fill: 'transparent' },
-                datalessRegionColor: '#333',
+                datalessRegionColor: 'rgba(255,255,255,0.05)',
                 defaultColor: '#f5f5f5'
             };
-            geoChart = new google.visualization.GeoChart(
-                document.getElementById('regions_div')
-            );
+            geoChart = new google.visualization.GeoChart(document.getElementById('regions_div'));
             geoChart.draw(dataTable, options);
         }
 
         function drawBarChart(labels, data) {
+            const accent = getAccentRgba;
             const ctxBar = document.getElementById('barChart').getContext('2d');
             topBarChart = new Chart(ctxBar, {
                 type: 'bar',
@@ -244,19 +238,22 @@
                     datasets: [{
                         label: 'Total Cases',
                         data,
-                        backgroundColor: 'rgba(54,162,235,0.7)'
+                        backgroundColor: accent(0.7),
+                        borderColor: accent(0.9),
+                        borderWidth: 1
                     }]
                 },
                 options: {
                     responsive: true,
                     scales: {
-                        y: { beginAtZero: true }
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: 'rgba(226,226,236,0.6)' }
+                        },
+                        x: { ticks: { color: 'rgba(226,226,236,0.6)' } }
                     },
                     plugins: {
-                        title: {
-                            display: true,
-                            text: 'Top 10 Countries by Total Cases'
-                        },
+                        title: { display: false },
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
@@ -268,16 +265,10 @@
             });
         }
 
-        // Ensure Google Charts redraws on window resize
         window.addEventListener('resize', () => {
             if (geoChart) geoChart.draw();
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/2711c8f32d.js" crossorigin="anonymous"></script>
-</body>
 </body>
 
 </html>

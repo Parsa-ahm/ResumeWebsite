@@ -1,0 +1,297 @@
+/* ════════════════════════════════════════════════════════════
+   QUANTUM OUTLIER DETECTION — Design System Integration
+════════════════════════════════════════════════════════════ */
+
+/* ── Header ─────────────────────────────────────────────────── */
+#header {
+  padding: 3.5rem 0 2rem;
+}
+
+.qd-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.32rem 0.9rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--accent-dim);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  margin-bottom: 1.25rem;
+}
+
+.qd-label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  flex-shrink: 0;
+}
+
+.qd-title {
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--text) 25%, var(--accent-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.qd-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 720px;
+  line-height: 1.75;
+  margin-bottom: 0;
+}
+
+/* ── Section label pattern ───────────────────────────────────── */
+.section-label-tag {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  opacity: 0.65;
+  margin-bottom: 0.35rem;
+}
+
+/* ── Stat Cards ─────────────────────────────────────────────── */
+.stat-card {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--r-lg) !important;
+  padding: var(--space-lg) var(--space-md) !important;
+  transition: all 0.2s ease !important;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.stat-card:hover {
+  border-color: var(--border-hover) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25) !important;
+}
+
+.stat-number {
+  font-size: 3.5rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em !important;
+  background: linear-gradient(135deg, var(--text) 0%, var(--accent-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem !important;
+  line-height: 1 !important;
+}
+
+.stat-card .text-muted {
+  color: var(--text-muted) !important;
+  font-size: 0.83rem !important;
+  font-weight: 500 !important;
+}
+
+/* ── Result Highlights ──────────────────────────────────────── */
+.result-highlight {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-left: 3px solid var(--accent) !important;
+  border-radius: var(--r) !important;
+  padding: var(--space-md) var(--space-lg) !important;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.result-highlight:hover {
+  background: var(--card-hover) !important;
+  border-left-color: var(--accent-light) !important;
+}
+
+.result-highlight h5 {
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  color: var(--text) !important;
+  margin-bottom: 0.6rem !important;
+  margin-top: 0 !important;
+}
+
+.result-highlight + .result-highlight {
+  margin-top: var(--space-md);
+}
+
+.result-highlight h5 i {
+  color: var(--accent-light);
+}
+
+.result-highlight p {
+  color: var(--text-muted) !important;
+  font-size: 0.88rem !important;
+  line-height: 1.7 !important;
+}
+
+/* ── Tech Badges ─────────────────────────────────────────────── */
+.tech-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 0.35rem 0.9rem !important;
+  background: var(--accent-dim) !important;
+  border: 1px solid rgba(var(--accent-rgb), 0.22) !important;
+  border-radius: 100px !important;
+  font-size: 0.82rem !important;
+  font-weight: 500 !important;
+  color: var(--accent-light) !important;
+  transition: all 0.18s ease !important;
+}
+
+.tech-badge:hover {
+  background: rgba(var(--accent-rgb), 0.22) !important;
+  border-color: rgba(var(--accent-rgb), 0.4) !important;
+  color: var(--text) !important;
+  transform: translateY(-1px);
+}
+
+/* ── Section Divider ─────────────────────────────────────────── */
+.section-divider {
+  height: 1px;
+  background: var(--border) !important;
+  background-image: none !important;
+  margin: 2.5rem 0;
+}
+
+/* ── Methodology numbered steps ──────────────────────────────── */
+.method-step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.method-step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
+  color: var(--accent-light);
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  letter-spacing: 0;
+}
+
+.method-step-title {
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  color: var(--text) !important;
+  margin: 0 !important;
+}
+
+/* ── Feature icon box ────────────────────────────────────────── */
+.feature-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background: var(--accent-dim);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-light);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Standard card typography ────────────────────────────────── */
+.standard-card .lead,
+.standard-card p:not(.card-text) {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.72;
+}
+
+.standard-card .card-text {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.standard-card ol,
+.standard-card ul {
+  padding-left: 1.25rem;
+}
+
+.standard-card li {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 0.4rem;
+}
+
+.standard-card code {
+  background: var(--accent-dim);
+  color: var(--accent-light);
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.82rem;
+}
+
+.standard-card strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.standard-card h2.h3 {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.standard-card h3 {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.standard-card h4.h5 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ── Document link cards ───────────────────────────────────────── */
+.doc-link-card:hover {
+  border-color: var(--accent) !important;
+  transform: translateY(-2px);
+}
+
+.doc-link-card:hover .feature-icon {
+  background: rgba(var(--accent-rgb), 0.25);
+  border-color: rgba(var(--accent-rgb), 0.35);
+}
+
+/* ── Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  #header {
+    padding: 2.5rem 0 1rem;
+  }
+
+  .stat-number {
+    font-size: 2.8rem !important;
+  }
+}

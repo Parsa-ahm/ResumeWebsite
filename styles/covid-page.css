@@ -1,0 +1,118 @@
+/* ════════════════════════════════════════════════════════════
+   COVID DASHBOARD — Design System Integration
+════════════════════════════════════════════════════════════ */
+
+/* ── Header ─────────────────────────────────────────────────── */
+body.page-covid #header {
+  padding: 3.5rem 0 2rem;
+}
+
+.covid-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.32rem 0.9rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--accent-dim);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  margin-bottom: 1.25rem;
+}
+
+.covid-label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  flex-shrink: 0;
+}
+
+.covid-title {
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--text) 25%, var(--accent-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.covid-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 720px;
+  line-height: 1.75;
+  margin-bottom: 0;
+}
+
+/* ── Section structure ──────────────────────────────────────── */
+.covid-section-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  opacity: 0.65;
+  margin-bottom: 0.35rem;
+}
+
+.covid-section-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  margin-bottom: var(--space-lg);
+}
+
+/* ── Summary table ─────────────────────────────────────────── */
+.covid-summary-table {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--r-lg) !important;
+  overflow: hidden;
+}
+
+.covid-summary-table th,
+.covid-summary-table td {
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+  padding: var(--space-md) var(--space-lg) !important;
+}
+
+.covid-summary-table th {
+  background: var(--surface) !important;
+  font-weight: 600;
+  color: var(--accent-light) !important;
+}
+
+.covid-summary-table tbody tr:hover td {
+  background: var(--card-hover) !important;
+}
+
+/* ── Chart containers ───────────────────────────────────────── */
+.covid-chart-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.covid-chart-card canvas {
+  max-height: 320px;
+}
+
+.section-divider {
+  height: 1px;
+  background: var(--border) !important;
+  background-image: none !important;
+  margin: 2.5rem 0;
+}

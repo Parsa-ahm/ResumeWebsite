@@ -1,0 +1,174 @@
+/* ════════════════════════════════════════════════════════════
+   COVID-19 DASHBOARD — Design System Integration
+════════════════════════════════════════════════════════════ */
+
+/* ── Header ─────────────────────────────────────────────────── */
+#header {
+  padding: 3.5rem 0 2rem;
+}
+
+.cv-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.32rem 0.9rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: rgba(248, 113, 113, 0.1);
+  border-color: rgba(248, 113, 113, 0.2);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fca5a5;
+  margin-bottom: 1.25rem;
+}
+
+.cv-label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f87171;
+  box-shadow: 0 0 8px #f87171;
+  flex-shrink: 0;
+  animation: pulse-cv 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-cv {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px #f87171; }
+  50% { opacity: 0.65; box-shadow: 0 0 12px #f87171; }
+}
+
+.cv-title {
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--text) 25%, #fca5a5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.cv-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 700px;
+  line-height: 1.75;
+  margin-bottom: 0;
+}
+
+/* ── Metric Cards ────────────────────────────────────────────── */
+.covid-metric-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  transition: all 0.2s ease;
+  height: 100%;
+}
+
+.covid-metric-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.covid-metric-value {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--text) 0%, #fca5a5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+
+.covid-metric-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Chart Cards ─────────────────────────────────────────────── */
+.chart-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+  transition: border-color 0.2s ease;
+}
+
+.chart-card:hover {
+  border-color: var(--border-hover);
+}
+
+.chart-card-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #fca5a5;
+  opacity: 0.7;
+  margin-bottom: 0.3rem;
+}
+
+.chart-card-title {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Error / Loading State ───────────────────────────────────── */
+.alert-card {
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  border-radius: var(--r);
+  padding: 1.25rem 1.5rem;
+  color: #fca5a5;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.loading-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+/* ── GeoChart container ──────────────────────────────────────── */
+#regions_div {
+  width: 100%;
+  min-height: 400px;
+}
+
+#regions_div svg,
+#regions_div div {
+  max-width: 100%;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  #header {
+    padding: 2.5rem 0 1rem;
+  }
+
+  .chart-card {
+    padding: 1.25rem;
+  }
+
+  .covid-metric-value {
+    font-size: 1.4rem;
+  }
+}
