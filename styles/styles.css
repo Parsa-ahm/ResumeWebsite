@@ -878,6 +878,7 @@ a:hover { color: var(--accent-light); }
 
 @media (max-width: 767px)  { .project-grid { grid-template-columns: 1fr; } }
 @media (min-width: 768px) and (max-width: 1023px) { .project-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1400px) { .project-grid { grid-template-columns: repeat(4, 1fr); } }
 
 .project-card {
   background: var(--card);

@@ -2,8 +2,8 @@
    GAMES PAGE — Design System Integration
 ════════════════════════════════════════════════════════════ */
 
-/* ── Header (matches quantum/resources pattern) ─────────────── */
-body.page-games #header {
+/* ── Header ─────────────────────────────────────────────────── */
+#header {
   padding: 3.5rem 0 2rem;
 }
 
@@ -52,6 +52,7 @@ body.page-games #header {
   margin-bottom: 0;
 }
 
+/* ── Section heading inside games section ────────────────────── */
 .section-title-alt {
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
@@ -69,4 +70,11 @@ body.page-games #header {
   color: var(--accent-light);
   opacity: 0.65;
   margin-bottom: 0.35rem;
+}
+
+/* ── Mobile ─────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  #header {
+    padding: 2.5rem 0 1rem;
+  }
 }

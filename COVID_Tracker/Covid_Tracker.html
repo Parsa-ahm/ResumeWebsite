@@ -39,26 +39,30 @@
     </section>
 
     <div class="container py-5 covid-loading" id="covidContent">
+
         <!-- Global Summary -->
         <section class="mb-5">
             <div class="text-center mb-4">
                 <div class="covid-section-label">Overview</div>
                 <h2 class="covid-section-title mb-0">Global Summary</h2>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="standard-card covid-loading-box">
-                        <div class="card-body p-0">
-                            <div id="summary" class="p-4">
-                                <div class="covid-skeleton covid-skeleton-line" style="width: 90%;"></div>
-                                <div class="covid-skeleton covid-skeleton-line" style="width: 75%;"></div>
-                                <div class="covid-skeleton covid-skeleton-line" style="width: 85%;"></div>
-                                <div class="covid-skeleton covid-skeleton-line" style="width: 70%;"></div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Skeleton: 4 stat card placeholders -->
+            <div class="covid-stat-grid" id="summarySkeletons">
+                <div class="covid-stat-card covid-loading-box">
+                    <div class="covid-skeleton covid-skeleton-stat"></div>
+                </div>
+                <div class="covid-stat-card covid-loading-box">
+                    <div class="covid-skeleton covid-skeleton-stat"></div>
+                </div>
+                <div class="covid-stat-card covid-loading-box">
+                    <div class="covid-skeleton covid-skeleton-stat"></div>
+                </div>
+                <div class="covid-stat-card covid-loading-box">
+                    <div class="covid-skeleton covid-skeleton-stat"></div>
                 </div>
             </div>
+            <!-- Real stat cards (hidden until data loads) -->
+            <div class="covid-stat-grid" id="summary" style="display: none;"></div>
         </section>
 
         <div class="section-divider"></div>
@@ -121,12 +125,22 @@
 
         function hideLoadingState() {
             document.getElementById('covidContent').classList.remove('covid-loading');
+            // Summary: swap skeletons for real cards
+            document.getElementById('summarySkeletons').style.display = 'none';
+            document.getElementById('summary').style.display = 'grid';
+            // Charts
             document.getElementById('lineChartPlaceholder').style.display = 'none';
             document.getElementById('covidChart').style.display = 'block';
             document.getElementById('geoPlaceholder').style.display = 'none';
             document.getElementById('regions_div').style.display = 'block';
             document.getElementById('barChartPlaceholder').style.display = 'none';
             document.getElementById('barChart').style.display = 'block';
+        }
+
+        function fmtNum(n) {
+            if (n >= 1_000_000) return (n / 1_000_000).toFixed(2) + 'M';
+            if (n >= 1_000) return (n / 1_000).toFixed(1) + 'K';
+            return n.toLocaleString();
         }
 
         async function loadData() {
@@ -153,22 +167,22 @@
                 });
                 const totalCases = dailyCases.slice(1).reduce((a, b) => a + b, 0);
                 const totalDeaths = dailyDeaths.slice(1).reduce((a, b) => a + b, 0);
-                const avgCases = (totalCases / (dates.length - 1)).toFixed(2);
-                const avgDeaths = (totalDeaths / (dates.length - 1)).toFixed(2);
+                const avgCases = Math.round(totalCases / (dates.length - 1));
+                const avgDeaths = Math.round(totalDeaths / (dates.length - 1));
 
                 hideLoadingState();
-                document.getElementById('summary').innerHTML = `
-                    <table class="table table-bordered mb-0 covid-summary-table">
-                        <thead>
-                            <tr><th>Metric</th><th>Value</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Total New Cases</td><td>${totalCases.toLocaleString()}</td></tr>
-                            <tr><td>Total New Deaths</td><td>${totalDeaths.toLocaleString()}</td></tr>
-                            <tr><td>Avg Daily Cases</td><td>${avgCases}</td></tr>
-                            <tr><td>Avg Daily Deaths</td><td>${avgDeaths}</td></tr>
-                        </tbody>
-                    </table>`;
+
+                const stats = [
+                    { value: fmtNum(totalCases),  label: 'Total Cases Recorded' },
+                    { value: fmtNum(totalDeaths), label: 'Total Deaths Recorded' },
+                    { value: fmtNum(avgCases),    label: 'Avg Daily Cases' },
+                    { value: fmtNum(avgDeaths),   label: 'Avg Daily Deaths' },
+                ];
+                document.getElementById('summary').innerHTML = stats.map(s => `
+                    <div class="covid-stat-card">
+                        <div class="covid-stat-number">${s.value}</div>
+                        <div class="covid-stat-label">${s.label}</div>
+                    </div>`).join('');
 
                 const accent = getAccentRgba;
                 const ctxLine = document.getElementById('covidChart').getContext('2d');
@@ -228,8 +242,8 @@
             } catch (err) {
                 hideLoadingState();
                 document.getElementById('summary').innerHTML = `
-                    <div class="alert alert-danger m-0 mx-3 my-3">
-                        Error loading data: ${err.message}
+                    <div class="alert alert-danger m-0" style="grid-column: 1 / -1;">
+                        <i class="fa fa-exclamation-triangle me-2"></i>Error loading data: ${err.message}
                     </div>`;
                 document.getElementById('covidChart').style.display = 'block';
                 document.getElementById('regions_div').style.display = 'block';
